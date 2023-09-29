@@ -1,0 +1,154 @@
+---
+title: "Unit Tests"
+author: "KF"
+output: html_document:
+editor_options: 
+  chunk_output_type: console
+---
+
+## Setup
+
+```{r setup,include=FALSE}
+knitr::opts_chunk$set(echo=TRUE)
+```
+
+```{r load functions}
+source(here("src","functions.R"))
+```
+
+### Libraries
+
+For users:
+
+```{r user lib}
+gc()
+
+#libraries copied directly from app.R
+library(shiny)
+library(shinyjs)
+library(tidyverse)
+library(waiter)
+library(DT)
+```
+
+For dev:
+
+```{r dev lib}
+library(data.table)
+library(here)
+library(kqol)
+```
+
+This code chunk is to avoid having to type out full name of example dataset.
+
+```{r}
+getwd()
+
+#store path to example data folder
+data_folder <- here("UnitTests","Ex_Data")
+
+#list files inside folder
+ex_data_files <- list.files(data_folder)
+
+(ex_data_files)
+```
+
+### Sample Data
+
+```{r}
+#'imports all files inside specified directory
+  #'Package + Documentation: https://github.com/kenf1/KF.QoL
+ex_data_list <- kqol::bulkImport(
+  FileExtension = ".csv",
+  FolderPath = data_folder
+)
+
+rm(data_folder,ex_data_files)
+```
+
+Alternative import using primarily base R:
+
+```{r}
+# ex_data_list <- list()
+# for(i in 1:length(ex_data_files)){
+#   ex_data_list[[i]] <- read_csv(ex_data_files[i])
+# }
+# names(ex_data_list) <- ex_data_files
+```
+
+## Tests
+
+### validate_odc
+
+This function is a wrapper around the `validate_schema` and `validate_structure` functions.
+
+```{r}
+#list to store/organize all unit testing outputs below
+outputs <- list()
+```
+
+```{r}
+outputs[["all"]] <- validate_odc(
+  dataset = ex_data_list$`Example ODC dataset`,
+  datadic = ex_data_list$`Example ODC data dictionary`,
+  str_checks = "all",
+  sch_checks = "all"
+)
+```
+
+entire function as a whole working as expected after removing duplicated `sch_checks` var in `validate_schema` function
+
+#### validate_schema
+
+```{r}
+# outputs[["schema"]] <- validate_schema(dataset = ex_data_list$`Example ODC dataset`,
+#                  datadic = ex_data_list$`Example ODC data dictionary`)
+```
+
+#### validate_structure
+
+#### pos1_char
+
+```{r}
+var_names <- ex_data_list$`Example ODC data dictionary`$VariableName
+
+var_names[5] <- "3abc"
+
+#apply check
+pos1_check <- lapply(var_names,first_char_letter)
+check_temp_df <- data.frame(Key=var_names,Value=unlist(pos1_check))
+    
+#keep datadic_vars that failed check
+check_temp_df <- check_temp_df %>%
+      dplyr::filter(Value=="Fail")
+
+rm(var_names,pos1_check,check_temp_df)
+```
+
+### checklist_to_df
+
+```{r}
+outputs[["ex_df"]] <- checklist_to_df(outputs$all$structure)
+head(outputs$ex_df)
+```
+
+don't worry about warning message of:
+  "In stri_replace_all_regex(string, pattern, fix_replacement(replacement),  :
+  argument is not an atomic vector; coercing"
+
+### startApp
+
+`startApp` is only for the package version of this app
+
+```{r}
+# startApp(loadReqPackages = FALSE)
+```
+
+### run app
+
+to run app (non-package version)
+
+```{r}
+source("./app.R")
+shinyApp(ui=ui,server=server)
+```

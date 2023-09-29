@@ -1,0 +1,66 @@
+---
+output: 
+  html_document:
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This app is in active development by Kenneth Fond, Hannah Radabaugh and Abel Torres Espin, under the guidance of the Open Data Commons development team. If you have inquiries or suggestions about the app, or find a bug, please contact info@odc-sci.org or info@odc-tbi.org.
+
+## The Open Data Commons
+
+Visit [odc-sci.org](https://odc-sci.org/) and [odc-tbi.org](https://odc-tbi.org/) for information
+
+## Open Data Commons Data Standards
+
+[More information](https://odc-sci/about/help#standards)
+
+[Data dictionary template](https://odc-sci.org/upload/community-components/ODC-SCI_Data_Dictionary_Template.csv)
+
+[How to prepare dictionaries](https://odc-sci.org/about/tutorials#dictionary)
+
+## The ODC checks
+
+### Structural checks
+
+This checks are performed in a dataset .csv file to ensure has minimal formatting standards for ODC
+
+* **Blank header:** There is a blank variable name. All cells in the header row (first row) must have a value.
+* **Duplicated header:** There are multiple columns with the same name. All column names must be unique.
+* **Blank row:** Rows must have at least one non-blank cell.
+* **Blank column:** Columns must have at least one non-blank cell.
+* **Duplicated row:** Rows can not be duplicated.
+* **Duplicated column:** Columns can not be duplicated. The result of this check will either be **pass** or **warning**. The curator should check to confirm.
+* **Required variables (SCI only):** Minimal required variables must be present on the dataset.
+
+### Schema checks
+
+In ODC-SCI the schema is marked by the data dictionary. These errors reflect problems on the data dictionary or conflicts between the data dictionary and the dataset.
+
+* **Data dictionary header:** The data dictionary contains all the necessary headers specified by the ODC-SCI standard.
+* **Data extra header:** The dataset contains at least one variable name not defined in the data dictionary.
+* **Data missing header:** The dataset is missing at least one  variable name defined in the data dictionary.
+* **Missing description:** The definition of a variable in the data dictionary is missing.
+* **Missing title:** The title of a variable in the data dictionary is missing.
+* **Required variables (SCI only):** Minimal required variables must be present on the data dictionary.
+
+### Checks not performed automatically
+
+This checks are not performed automatically by this tool yet
+
+* **Required-constraint:** A required field for the dataset contains no values or is not assigned on the dataset. Currently the only required value in the datasets is the subject identifier. As ODC-SCI develops additional data standards, it is possible that more variables will be required on all datasets.
+* **Value-constraint:** The values of a variable should be equal to one of the permitted values enumerated in the data dictionary, or within the limits of the permitted values.
+
+## Exploratory Data Report
+
+The exploratory data report is generated with Python [ydata-profiling](https://ydata-profiling.ydata.ai/) library.
+
+## License
+
+MIT License
+
+Copyright (c) 2022 The Regents of the University of California

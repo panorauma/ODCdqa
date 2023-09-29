@@ -1,0 +1,11 @@
+Investigator,AnimalID,AnimalID-1,Date,BBB,BBB_duplicated_0,BBB score week 3,BBB score week 4,BBB score week 6,BBB score week 7,BBB score week 8,BBB score week 9
+Abel,5,5,8/21/17,2,3,3,3,2,4,4,4
+Abel,16,16,8/21/17,1,3,3,4,3,3,2,1
+Abel,17,17,8/21/17,2,1,2,1,1,3,3,2
+John,30,30,8/21/17,1,2,3,5,5,7,7,9
+John,17,17,8/21/17,5,6,7,8,9,8,9,8
+John,4,4,8/21/17,0,1,1,0,-1,-1,-2,-3
+John,25,25,8/21/17,5,5,5,7,8,9,8,10
+John,4,4,8/21/17,3,3,4,4,4,3,3,4
+Abel,3,3,8/21/17,1,0,2,3,5,6,8,9
+Abel,3,3,8/21/17,1,0,2,3,5,6,8,9

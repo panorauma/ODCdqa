@@ -1,0 +1,25 @@
+VariableName,Title,Unit_of_Measure,Description,DataType,PermittedValues,MinimumValue,MaximumValue,Comments
+Categorical_Ex1,Example Variable 1 - Categorical,,"Please delete this entry: Categorical_Ex1 is an example entry for a categorical variable (e.g. species, sex, etc).",Categorical,value1; value2; value3,,,Delete this example entry.
+Mol_Ex2,Example Variable 2 - Molecular,Example units (eu),Please delete this entry: Mol_Ex2 is an example entry for a quantitative measurement.,Numeric,,0,100,Delete this example entry.
+Ordinal_Ex3,Example Variable 3 - Ordinal,,Please delete this entry: Ordinal_Ex3 is an example entry for an ordinal variable (could be numeric but not continuous).,Ordinal,,1,5,Delete this example entry.
+Date_Ex4,Example Variable 4 - Date,,Please delete this entry: example Date entry (e.g. injury surgery date).,Date,,earliest date,last date,Delete this example entry.
+Free_Text_Ex5,Example Variable 5 - Free Text,,Please delete this entry: example Free Text entry (e.g. 'Notes' column in the dataset).,Free Text,,,,Delete this example entry.
+,,,,,,,,
+Subject_ID,Subject identifier,,Unique identifiers for each subject in the dataset,Categorical,,,,Required for publication
+Species,Species,,Species of the subject,Categorical,,,,Required for publication
+Strain,Strain,,Strain of the subject,Categorical,,,,Required for publication with option of 'unknown' or 'not available'
+Animal_origin,Vendor or origin of the animal,,Vendor or origin of the animal,Categorical,,,,Required for publication; Set to 'not available' if data is not present
+Age,Age of the subject,,"Age of the subject at start of experiment. If age is available at different timepoints, age is provided at the corresponding time in the XXX time variable",Numeric,,,,Required for publication; Set to 'not available' if data is not present
+Weight,Weight of the subject,,"Weight of the subject at start of experiment. If weight is available at different timepoints, weight is provided at the corresponding time in the XXX time variable",Numeric,,,,Required for publication; Set to 'not available' if data is not present
+Sex,Sex of the subject,,Sex of the subject,Categorical,,,,Required for publication
+Group,Experimental group,,Name or identifier of the experimental group at which the subject was included if any,Categorical,,,,Required for publication; Set to 'not applicable' if  do not apply
+Laboratory,Laboratory name,,"Name of laboratory, usually the PI",Categorical,,,,Required for publication
+StudyLeader,Study leader,,Name of person responsible for overseeing project ,Categorical,,,,Required for publication; Set to 'not available' if data is not present or do not want to disclosure
+Published,Whether the study was published,,"General category of whether the study was published/in press, under review/pre-press, or unpublished.",Categorical,published/in press; under review/pre-press; unpublished,,,Required for publication
+Exclusion_in_origin_study,Whether the subject was excluded in the originating study,,"Whether the subject was included in the study that originated the data. 'Total exclusion"" if excluded from the entire study, otherwise, specify experiment or measures of which the animal was excluded if any. For example: animals that were run in behavior but maybe tissue is loss and excluded from histological analyses. Reasons forexclusion might be specify in the exclusion_reason variable.",Categorical,Yes; No,,,Required for publication
+Exclusion_reason,Reason or creteria for exluding subject from originating study,,Reason by which the subject was excluded from the study that originated the data as specified in the Exclusion_in_origin_study variable,Free text,,,,Required for publication
+Cause_of_Death,Cause of subject death,,"Cause of death (e.g. perfusion/necropsy, died during surgery, euthanized for health reasons, etc)",Free text,,,,Required for publication; Set to 'not applicable' if  do not apply
+Injury_type,Type or model of injury,,"Type or model of injury used in the subject (e.g. contusion, complete transaction, partial section)",Categorical,,,,Required for publication; Set to 'not applicable' if  do not apply
+Injury_device,Device used for injury,,Name of the device used for the injury,Free text,,,,Required for publication; Set to 'not applicable' if  do not apply
+Injury_level,Spinal cord level of the injury,,Spinal cord level at which the injury was performed including segment (e.g. cervical; C) and number (e.g. C5),Categorical,,,,Required for publication; Set to 'not applicable' if  do not apply
+Injury_details,Other details referent to injury,,Other details referent to the injury that might be relevant to understand the severity and type of injury performed,Free text,,,,Required for publication; Set to 'not applicable' if  do not apply
