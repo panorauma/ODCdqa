@@ -1,12 +1,14 @@
 ---
 title: "ODC Utilities"
 author: "Author names"
-format: html
-toc: true
-toc-depth: 6
-code-fold: false
-code-overflow: wrap
-code-copy: hover
+format: 
+  html:
+    toc: true
+    toc-depth: 6
+    code-fold: false
+    code-overflow: wrap
+    code-copy: hover
+    self-contained: true
 execute: 
   eval: false
   echo: false

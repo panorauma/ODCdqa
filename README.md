@@ -1,6 +1,6 @@
 # ODC Data Quality App
 
-[![Build container](https://github.com/kenf1/dqa/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/kenf1/dqa/actions/workflows/build.yml) [![Render vignette](https://github.com/kenf1/dqa/actions/workflows/render.yml/badge.svg?branch=main)](https://github.com/kenf1/dqa/actions/workflows/render.yml)
+[![Build container](https://github.com/panorauma/ODCdqa/actions/workflows/build.yml/badge.svg)](https://github.com/panorauma/ODCdqa/actions/workflows/build.yml) [![pages-build-deployment](https://github.com/panorauma/ODCdqa/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/panorauma/ODCdqa/actions/workflows/pages/pages-build-deployment) [![Render vignette](https://github.com/panorauma/ODCdqa/actions/workflows/render.yml/badge.svg)](https://github.com/panorauma/ODCdqa/actions/workflows/render.yml)
 
 __Ready to deploy containerized Data Quality App__
 
