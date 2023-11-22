@@ -129,24 +129,12 @@ ui <- fluidPage(
                     )
              ),
              tabPanel("About the ODC and this app",htmlOutput("about"))
-  ))
+  )
+)
 
 # Define server logic to read selected file ----
 server <- function(input, output, session) {
   dataframes <- reactiveValues()
-  
-  check_def <- eventReactive(input[["cell"]], {
-    
-    check_name<-dataframes$render_checks$df$CheckName[input[["cell"]]$row+1]
-    
-    temp_definition<-definition_check[as.character(definition_check$check_label)==check_name,]
-    
-    tags$div(
-      tags$p(tags$strong(temp_definition$check_label)),
-      tags$p(tags$strong("Definition: "), temp_definition$check_definition),
-      tags$p(tags$strong("Tip: "), temp_definition$Check_tip)
-    )
-  })
   
   w = Waiter$new(
     html = spin_3(), 
@@ -262,7 +250,7 @@ server <- function(input, output, session) {
     
     dataframes$render_checks$table_html
   })
-  
+
   #suggested varname(s)
   output$suggested_varname <- DT::renderDT({
     req(input$checkButton)
@@ -333,9 +321,18 @@ server <- function(input, output, session) {
     # contentType = "text/html"
   )
   
-  
-  output[["check_tip"]] <- renderUI({
-    check_def()
+  #info popup when click on check name
+  check_def <- eventReactive(input[["cell"]], {
+    
+    check_name <- dataframes$render_checks$df$CheckName[input[["cell"]]$row+1]
+    
+    temp_definition <- definition_check[as.character(definition_check$check_label)==check_name,]
+
+    tags$div(
+      tags$p(tags$strong(temp_definition$check_label)),
+      tags$p(tags$strong("Definition: "), temp_definition$check_definition),
+      tags$p(tags$strong("Tip: "), temp_definition$Check_tip)
+    )
   })
   
   observeEvent(check_def(), {
@@ -346,6 +343,10 @@ server <- function(input, output, session) {
         easyClose = TRUE
       )
     )
+  })
+  
+  output[["check_tip"]] <- renderUI({
+    check_def()
   })
 }
 
