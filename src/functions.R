@@ -163,7 +163,7 @@ render_check_table <- function(structure_checks,schema_checks){
                                 rowGroup = list(dataSrc = 0),
                                 pageLength = 16
                               ),editable = FALSE,
-                              callback = JS(callback)) %>%
+                              callback = JS("return table")) %>%
     formatStyle('Status',target='row',
                 backgroundColor=styleEqual(c("Pass","Fail","Warning"), c('#b6d7a8','#e06666',"#ffa500"))
     )
