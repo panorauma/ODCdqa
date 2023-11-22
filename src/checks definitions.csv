@@ -1,4 +1,4 @@
-check_name,check_label,check_definition,Check_tip
+check_name,check_label,check_definition,check_tip
 blank_header,Blank header,There is a blank variable name. All cells in the header row (first row) must have a value.,Please check that there are no empty cells in the first row. Empty columns in the middle of the dataset can also cause this error.
 duplicated_header,Duplicated header,There are multiple columns with the same name. All column names must be unique.,"Please change the column names to be unique. Each variable must have a different name. If two variables are the same, you can add prefixes or sufixes to it."
 blank_row,Blank row,Rows must have at least one non-blank cell.,Emtpy rows do not contain data. Make sure to not include rows that are all empty.

@@ -107,8 +107,17 @@ ui <- fluidPage(
                         
                         mainPanel(
                           tabsetPanel(
-                            tabPanel("Check Results",DT::dataTableOutput("result_table")),
-                            tabPanel("Suggested Variable Name(s)",DT::dataTableOutput("suggested_varname"))
+                            tabPanel("Check Results",
+                                     DT::dataTableOutput("result_table"),
+                                     tags$script("
+                                        $(document).on('click','#result_table td',function(){
+                                          var cellData = $(this).text();
+                                          Shiny.setInputValue('selectedCell',cellData);
+                                        });
+                                      ")
+                                     ),
+                            tabPanel("Suggested Variable Name(s)",
+                                     DT::dataTableOutput("suggested_varname"))
                             )
                           )
                         )
@@ -322,31 +331,26 @@ server <- function(input, output, session) {
   )
   
   #info popup when click on check name
-  check_def <- eventReactive(input[["cell"]], {
+  observeEvent(input[["selectedCell"]], {
+    #create subset to use in HTML(paste())
+    index <- which(definition_check$check_label == input$selectedCell,arr.ind=TRUE)
+    temp_row <- definition_check[index,]
     
-    check_name <- dataframes$render_checks$df$CheckName[input[["cell"]]$row+1]
-    
-    temp_definition <- definition_check[as.character(definition_check$check_label)==check_name,]
-
-    tags$div(
-      tags$p(tags$strong(temp_definition$check_label)),
-      tags$p(tags$strong("Definition: "), temp_definition$check_definition),
-      tags$p(tags$strong("Tip: "), temp_definition$Check_tip)
-    )
-  })
-  
-  observeEvent(check_def(), {
     showModal(
       modalDialog(
-        htmlOutput("check_tip"), 
-        size = "m", 
+        title = temp_row[["check_label"]],
+        HTML(
+          paste(
+            "<p>",
+              "<strong>Check name: </strong>",temp_row[["check_name"]]),"<br><br>",
+              "<strong>Definition: </strong>",temp_row[["check_definition"]],"<br><br>",
+              "<strong>Tip: </strong>",temp_row[["check_tip"]],
+            "</p>"
+          ),
+        size = "m",
         easyClose = TRUE
       )
     )
-  })
-  
-  output[["check_tip"]] <- renderUI({
-    check_def()
   })
 }
 
