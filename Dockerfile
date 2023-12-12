@@ -2,7 +2,8 @@
 FROM rocker/shiny-verse:4.3.1
 RUN apt-get update && apt-get install -y \
     python3 \
-    python3-pip
+    python3-pip \
+    nginx
 
 #install req packages (tidyverse & shiny are included in base img)
 COPY ./setup ./setup
@@ -14,5 +15,8 @@ COPY ./src/* /root/shiny_app/
 WORKDIR /root/shiny_app/
 EXPOSE 3838
 
-#run app
-CMD ["R", "-e", "shiny::runApp(host='0.0.0.0', port=3838)"]
+#copy nginx config
+COPY ./conf.d ./etc/nginx/conf.d
+
+#run app (start nginx then shiny)
+CMD ["/usr/sbin/nginx", "-g", "daemon off;"] && ["R", "-e", "shiny::runApp(host='0.0.0.0', port=3838)"]
