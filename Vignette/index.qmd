@@ -1,6 +1,6 @@
 ---
 title: "ODC Utilities"
-author: "Author names"
+author: "Kenneth A Fond, Hannah Radabaugh, Romana Vavrek, Karim Fouad, Jeffrey S Grethe, Maryann E Martone, Adam R Ferguson, Abel Torres-Espin"
 format: 
   html:
     toc: true
@@ -271,5 +271,5 @@ Copyright (c) 2022 The Regents of the University of California
 
 For any issues or suggestions, please contact the ODC Team via one of the following:
 
-- [Email]()
-- [GitHub]()
+- Email: [odc-sci](info@odc-sci.org), [odc-tbi](info@odc-tbi.org)
+- [GitHub](https://github.com/panorauma/ODCdqa)

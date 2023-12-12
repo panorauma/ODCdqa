@@ -6,10 +6,13 @@
 
 |Name|Link|Description|
 |---|---|---|
+|ODCdqa|[ODCdqa]()|ODC Data Quality App (web version)|
 |ODCdqaFunctions|[ODCdqaFunctions](https://github.com/orgs/panorauma/ODCdqaFunctions)|ODCdqa backend functions as standalone R package|
 |ODCdqaImage|[ODCdqaImage](https://github.com/orgs/panorauma/packages?repo_name=ODCdqa)|Docker image/dev container|
 
 ## Links
 
-Vignettes: [Link](https://panorauma.github.io/ODCdqa/Vignette/)
-Technical Paper: [Link]()
+|Name|Link|
+|---|---|
+|Vignette|[Link](https://panorauma.github.io/ODCdqa/Vignette/)|
+|Technical Paper|[Link]()|

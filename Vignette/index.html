@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Author names">
+<meta name="author" content="Kenneth A Fond, Hannah Radabaugh, Romana Vavrek, Karim Fouad, Jeffrey S Grethe, Maryann E Martone, Adam R Ferguson, Abel Torres-Espin">
 
 <title>ODC Utilities</title>
 <style>
@@ -5625,7 +5625,7 @@ var createPalette = {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Author names </p>
+             <p>Kenneth A Fond, Hannah Radabaugh, Romana Vavrek, Karim Fouad, Jeffrey S Grethe, Maryann E Martone, Adam R Ferguson, Abel Torres-Espin </p>
           </div>
   </div>
     
@@ -5689,11 +5689,11 @@ var createPalette = {
 <p>To install the required Python packages, run one of the following in terminal:</p>
 <p>macOS/Linux</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>python3 <span class="sc">-</span>m pip install <span class="sc">-</span>r requirements.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> pip install <span class="at">-r</span> requirements.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Windows</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>python pip3 install <span class="sc">-</span>r requirements.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> pip3 install <span class="at">-r</span> requirements.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="run-application" class="level4">
@@ -5736,8 +5736,8 @@ var createPalette = {
 <div class="cell">
 <div class="cell-output-display">
 
-<div class="DiagrammeR html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-5276bbd7f22dbaa26802" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-5276bbd7f22dbaa26802">{"x":{"diagram":"\ngraph LR\n  A{Import dataset} --> validate_structure\n  B{Import data dictionary} --> validate_schema\n  validate_structure --> validate_odc\n  validate_schema --> validate_odc\n  validate_odc --> checklist_to_df\n  checklist_to_df --> render_check_table\n  render_check_table --> C{Run app and display}\n"},"evals":[],"jsHooks":[]}</script>
+<div class="DiagrammeR html-widget html-fill-item" id="htmlwidget-d8d3e5249f4f58ee5bc7" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-d8d3e5249f4f58ee5bc7">{"x":{"diagram":"\ngraph LR\n  A{Import dataset} --> validate_structure\n  B{Import data dictionary} --> validate_schema\n  validate_structure --> validate_odc\n  validate_schema --> validate_odc\n  validate_odc --> checklist_to_df\n  checklist_to_df --> render_check_table\n  render_check_table --> C{Run app and display}\n"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <ul>
@@ -5866,8 +5866,8 @@ var createPalette = {
 <h2 class="anchored" data-anchor-id="issuessuggestions">Issues/Suggestions</h2>
 <p>For any issues or suggestions, please contact the ODC Team via one of the following:</p>
 <ul>
-<li><a href>Email</a></li>
-<li><a href>GitHub</a></li>
+<li>Email: <a href="info@odc-sci.org">odc-sci</a>, <a href="info@odc-tbi.org">odc-tbi</a></li>
+<li><a href="https://github.com/panorauma/ODCdqa">GitHub</a></li>
 </ul>
 </section>
 

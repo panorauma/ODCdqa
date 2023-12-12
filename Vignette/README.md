@@ -1,3 +1,3 @@
-## DocFiles
+## Vignette
 
 This folder contains supplemental information to create the documentation/vignette.
