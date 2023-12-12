@@ -1,0 +1,73 @@
+---
+title: "Figure 5B"
+format: 
+    html:
+        code-fold: false
+        code-tools: false
+        toc: true
+        toc-location: left
+        toc-depth: 6
+        code-overflow: wrap
+        code-copy: hover
+        self-contained: true
+editor_options: 
+  chunk_output_type: console
+execute: 
+  message: false
+  warning: false
+  echo: true
+  eval: true
+---
+
+```{mermaid}
+flowchart LR
+  A([R <br/> programming <br/> language]) & B([Python <br/> programming <br/> language]) & C([Docker]) --> P{git} --> D[(ODCdqa Repo)]
+
+  D --> |Use:|E{GitHub Actions} --> |Create:|F{{ODCdqaImage}} --> |Deploy to:|G{AWS EC2} --> |Host:|H{{ODCdqa <br/> Web Application}}
+  F --> |Upload to:|N[(GHCR)] --> |Host:|O{{ODCdqaImage}}
+
+  E --> |Deploy to:|I[(GitHub Pages)] --> |Host:|J{{Vignettes}}
+  D --> |Use:|K{git submodule} --> |Create:|L[(ODCdqaFunctions <br/> Repo)] --> |Host:|M{{ODCdqaFunctions <br/> R Package}}
+
+  E --> |Save changes|D
+
+  subgraph Inputs
+  A
+  B
+  C
+  P
+  end
+
+  subgraph Intermediate
+  D
+  F
+  G
+  E
+  I
+  L
+  N
+  K
+  end
+
+  subgraph Outputs
+  J
+  H
+  O
+  M
+  end
+
+  classDef inputs fill: #F8FF95
+  class A,B,C inputs;
+
+  classDef db fill: #98fb98
+  class N,I db;
+
+  classDef products fill: #AEDEFC
+  class F,H,O,M,J products;
+
+  classDef repo fill: #EDB7ED
+  class D,L repo;
+
+  classDef cicd fill: #ffcc99
+  class E,K,G,P cicd;
+```
