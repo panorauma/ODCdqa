@@ -1,5 +1,5 @@
 #base img + install python
-FROM rocker/shiny-verse:4.3.1
+FROM rocker/shiny-verse:4.3.2
 RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip
@@ -15,4 +15,4 @@ WORKDIR /root/shiny_app/
 EXPOSE 3838
 
 #run app
-CMD ["R", "-e", "shiny::runApp(host='0.0.0.0', port=3838)"]
+CMD ["R", "-e", "shiny::runApp(host='127.0.0.1', port=3838)"]
