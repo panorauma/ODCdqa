@@ -15,4 +15,4 @@ WORKDIR /root/shiny_app/
 EXPOSE 3838
 
 #run app
-CMD ["R", "-e", "shiny::runApp(host='127.0.0.1', port=3838)"]
+CMD ["R", "-e", "shiny::runApp(host='0.0.0.0', port=3838)"]
