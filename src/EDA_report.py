@@ -4,18 +4,19 @@ import os
 import sys
 from ydata_profiling import ProfileReport
 
-parent_path = str(sys.argv[1])
+parent_path = str(sys.argv[2])
+orig_filename = str(sys.argv[3])
 
 df_data = pd.read_csv(parent_path+"dataset.csv")
 df_dic = pd.read_csv(parent_path+"data_dic.csv")
 
 profile = df_data.profile_report(
-    title="Profile Report for "+str(sys.argv[2]),
+    title="Profile Report for "+orig_filename,
     minimal = True,
     infer_dtypes=True,
     orange_mode=True,
     dataset={
-        "description": "Profile Report for "+str(sys.argv[2])
+        "description": "Profile Report for "+orig_filename
         # "copyright_holder": "ODC-SCI; Ferguson Lab, UCSF",
         # "copyright_year": "2022",
     },    

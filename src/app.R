@@ -270,7 +270,9 @@ server <- function(input, output, session) {
     #'4.add suggested name
     #'5.nchar(suggested name)
     #'6.rename cols
-    suggested_varname <- data.frame(orig_name=unlist(dataframes[["valid"]][["schema"]][["over_60char"]][["which_over_60char_headers"]])) %>%
+    suggested_varname <- data.frame(orig_name=unlist(
+        dataframes[["valid"]][["schema"]][["over_60char"]][["which_over_60char_headers"]])
+      ) %>%
       dplyr::distinct() %>%
       dplyr::mutate(orig_nchar=nchar(orig_name)) %>%
       dplyr::mutate(new_name=orig_name %>%
@@ -301,19 +303,28 @@ server <- function(input, output, session) {
 
     # Save temporary files based on the unique session. This prevent multiple sessions to re-write
     # the temp files.
+
+    #create temp path (will be rm when shiny closes) + recreated if no longer exists
+    temp_dir <- tempdir(check=TRUE)
+    filenames <- c("dataset.csv","datadic.csv")
+    fullpaths <- lapply(filenames,function(x){
+      paste(temp_dir,x,sep="/")
+    })
     
-    write.csv(dataframes$df_data, paste0(session$token,"dataset.csv"), row.names = F)
-    write.csv(dataframes$df_dic, paste0(session$token,"data_dic.csv"), row.names = F)
+    write.csv(dataframes$df_data,filenames[[1]],row.names=FALSE)
+    write.csv(dataframes$df_dic,filenames[[2]],row.names=FALSE)
     
-    # Run python
-    
-    name_file<-str_replace_all(input$data$name, " ", "_")
-    system(paste0('python3 -m EDA_report.py ', session$token, ' ',name_file)) #python3 specifies python ver, -m flag allows run module as script
-    js$browseURL(paste0(session$token ,"Profile.html"))
+    #'Run ydata-profiling
+    #'  run from terminal (4 total args)
+    #'  temp_dir = arg[2] python is index 0
+    #'  orig_filename = pass original filename into profile report
+    orig_filename <- str_replace_all(input$data$name, " ", "_")
+    system(paste0("python3 EDA_report.py ",temp_dir,"/ ",orig_filename))
+    js$browseURL(paste0(temp_dir,"/Profile.html"))
     
     # Temp files are deleted after profiler is done
-    unlink(paste0(session$token,"dataset.csv"), force = T) # delete temp files
-    unlink(paste0(session$token,"data_dic.csv"), force = T) # delete temp files
+    # unlink(paste0(session$token,"dataset.csv"), force = T) # delete temp files
+    # unlink(paste0(session$token,"data_dic.csv"), force = T) # delete temp files
     
     ## enable download button
     enable("profilingDownButton")
@@ -322,12 +333,12 @@ server <- function(input, output, session) {
   
   ## action for downloading EDA profiling
   output$profilingDownButton <- downloadHandler(
-    filename = "EDA profiling.html",
+    filename = "ProfileReport.html",
     content = function(file) {
-      file.copy(paste0(session$token,"Profile.html"),file)
-      unlink(paste0(session$token,"Profile.html"))
-    }
-    # contentType = "text/html"
+      file.copy(paste0(temp_dir,"/Profile.html"),file)
+      # unlink(paste0(temp_dir,"Profile.html"))
+    },
+    contentType = "text/html"
   )
   
   #info popup when click on check name
