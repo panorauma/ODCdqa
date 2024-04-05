@@ -4,6 +4,7 @@ author: "Kenneth A Fond, Hannah Radabaugh, Romana Vavrek, Karim Fouad, Jeffrey S
 format: 
   html:
     toc: true
+    toc-location: left
     toc-depth: 6
     code-fold: false
     code-overflow: wrap
@@ -66,7 +67,7 @@ To install ODC Utilities, run the following lines of code in R console:
 #| echo: true
 install.packages("devtools")
 
-devtools::install_github("")
+devtools::install_github("panorauma/ODCdqa")
 ```
 
 To install the required R packages, run the following line in R console:

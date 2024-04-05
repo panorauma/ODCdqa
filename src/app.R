@@ -17,6 +17,7 @@ shinyjs.browseURL = function(url) {
 #checks definitions
 definition_check<-read.csv("checks definitions.csv")
 
+#MARK: UI
 ui <- fluidPage(
   useShinyjs(),
   extendShinyjs(text = js_code, functions = 'browseURL'),
@@ -141,6 +142,7 @@ ui <- fluidPage(
   )
 )
 
+#MARK: server
 # Define server logic to read selected file ----
 server <- function(input, output, session) {
   dataframes <- reactiveValues()
@@ -365,5 +367,6 @@ server <- function(input, output, session) {
   })
 }
 
+#MARK: Run app
 # Run the application
 shinyApp(ui = ui, server = server)
