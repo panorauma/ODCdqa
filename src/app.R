@@ -295,6 +295,7 @@ server <- function(input, output, session) {
     empty_data_dict(dataframes$df_data)
   })
   
+  #MARK: generate profile report
   #run profiling report
   observeEvent(input$profilingButton,{
     
@@ -328,12 +329,13 @@ server <- function(input, output, session) {
     # unlink(paste0(session$token,"dataset.csv"), force = T) # delete temp files
     # unlink(paste0(session$token,"data_dic.csv"), force = T) # delete temp files
     
-    ## enable download button
+    #enable download button
     enable("profilingDownButton")
     w$hide()
   })
   
-  ## action for downloading EDA profiling
+  #MARK: download profile report
+  #action for downloading EDA profiling
   output$profilingDownButton <- downloadHandler(
     filename = "ProfileReport.html",
     content = function(file) {
