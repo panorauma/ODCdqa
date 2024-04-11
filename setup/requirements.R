@@ -5,7 +5,9 @@ to_install <- c(
     # "shiny",
     "shinyjs",
     "DT",
-    "waiter")
+    "waiter",
+    "reticulate"
+)
 
 install.packages(to_install)
 

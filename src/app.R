@@ -4,6 +4,14 @@ library(shinyjs)
 library(tidyverse)
 library(waiter)
 library(DT)
+library(reticulate)
+
+#MARK: setup reticulate
+reticulate::py_install("pandas")
+reticulate::py_install("ydata_profiling")
+
+pd <- reticulate:: import("pandas")
+pr <- reticulate:: import("ydata_profiling")
 
 options(shiny.maxRequestSize = 100*1024^2)
 source("functions.R")
@@ -304,30 +312,16 @@ server <- function(input, output, session) {
     
     w$show()
 
-    # Save temporary files based on the unique session. This prevent multiple sessions to re-write
-    # the temp files.
-
     #create temp path (will be rm when shiny closes) + recreated if no longer exists
     temp_dir <- tempdir(check=TRUE)
-    filenames <- c("dataset.csv","datadic.csv")
-    fullpaths <- lapply(filenames,function(x){
-      paste(temp_dir,x,sep="/")
-    })
     
-    write.csv(dataframes$df_data,filenames[[1]],row.names=FALSE)
-    write.csv(dataframes$df_dic,filenames[[2]],row.names=FALSE)
-    
-    #'Run ydata-profiling
-    #'  run from terminal (4 total args)
-    #'  temp_dir = arg[2] python is index 0
-    #'  orig_filename = pass original filename into profile report
-    orig_filename <- str_replace_all(input$data$name, " ", "_")
-    system(paste0("python3 EDA_report.py ",temp_dir,"/ ",orig_filename))
-    js$browseURL(paste0(temp_dir,"/Profile.html"))
-    
-    # Temp files are deleted after profiler is done
-    # unlink(paste0(session$token,"dataset.csv"), force = T) # delete temp files
-    # unlink(paste0(session$token,"data_dic.csv"), force = T) # delete temp files
+    py_df <- reticulate::r_to_py(dataframes$df_data)
+    pd_dict <- reticulate::r_to_py(dataframes$df_dic)
+
+    profile <- pr$ProfileReport(new_df,title="Profile Report",minimal=TRUE,
+                                infer_types=TRUE,orange_mode=TRUE,
+                                correlations=reticulate::py_none())
+    profile$to_file(paste0(temp_dir,"/ProfileReport.html"))
     
     #enable download button
     enable("profilingDownButton")
@@ -339,8 +333,7 @@ server <- function(input, output, session) {
   output$profilingDownButton <- downloadHandler(
     filename = "ProfileReport.html",
     content = function(file) {
-      file.copy(paste0(temp_dir,"/Profile.html"),file)
-      # unlink(paste0(temp_dir,"Profile.html"))
+      file.copy(paste0(temp_dir,"/ProfileReport.html"),file)
     },
     contentType = "text/html"
   )
