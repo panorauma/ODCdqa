@@ -6,24 +6,29 @@ library(waiter)
 library(DT)
 library(reticulate)
 
+options(shiny.maxRequestSize = 100*1024^2)
+
+#import other file dependencies (workaround for file not found)
+source("https://raw.githubusercontent.com/panorauma/ODCdqa/main/src/functions.R")
+definition_check<-read.csv("https://raw.githubusercontent.com/panorauma/ODCdqa/main/src/checks%20definitions.csv")
+
+js_code <- "
+shinyjs.browseURL = function(url){
+  window.open(url,'_blank');
+}
+"
+
+#create temp path (will be rm when shiny closes) + recreated if no longer exists
+temp_dir <- tempdir(check=TRUE)
+temp_file <- file.path(temp_dir,"about.html")
+download.file("https://raw.githubusercontent.com/panorauma/ODCdqa/main/src/about.html",temp_file)
+
 #MARK: setup reticulate
 reticulate::py_install("pandas")
 reticulate::py_install("ydata_profiling")
 
 pd <- reticulate:: import("pandas")
 pr <- reticulate:: import("ydata_profiling")
-
-options(shiny.maxRequestSize = 100*1024^2)
-source("functions.R")
-
-js_code <- "
-shinyjs.browseURL = function(url) {
-  window.open(url,'_blank');
-}
-"
-
-#checks definitions
-definition_check<-read.csv("checks definitions.csv")
 
 #MARK: UI
 ui <- fluidPage(
@@ -311,16 +316,11 @@ server <- function(input, output, session) {
                      closeButton =TRUE)
     
     w$show()
-
-    #create temp path (will be rm when shiny closes) + recreated if no longer exists
-    temp_dir <- tempdir(check=TRUE)
     
     py_df <- reticulate::r_to_py(dataframes$df_data)
-    pd_dict <- reticulate::r_to_py(dataframes$df_dic)
+    # pd_dict <- reticulate::r_to_py(dataframes$df_dic) #not req in minimal mode
 
-    profile <- pr$ProfileReport(new_df,title="Profile Report",minimal=TRUE,
-                                infer_types=TRUE,orange_mode=TRUE,
-                                correlations=reticulate::py_none())
+    profile <- pr$ProfileReport(py_df,title="Profile Report",minimal=TRUE)
     profile$to_file(paste0(temp_dir,"/ProfileReport.html"))
     
     #enable download button
