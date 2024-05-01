@@ -8,7 +8,7 @@
 
 <meta name="author" content="Kenneth A Fond, Hannah Radabaugh, Romana Vavrek, Karim Fouad, Jeffrey S Grethe, Maryann E Martone, Adam R Ferguson, Abel Torres-Espin">
 
-<title>ODC Utilities</title>
+<title>ODCdqa</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -5689,7 +5689,7 @@ var createPalette = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">ODC Utilities</h1>
+<h1 class="title">ODCdqa</h1>
 </div>
 
 
@@ -5714,8 +5714,8 @@ var createPalette = {
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>ODC Utilities is a collection of tools created by the ODC team to facilitate and simplify the process of preparing datasets and data dictionaries for upload to the ODC platform.</p>
-<p>There will be 2 versions of ODC Utilities:</p>
+<p>ODCdqa is a collection of tools created by the ODC team to facilitate and simplify the process of preparing datasets and data dictionaries for upload to the ODC platform.</p>
+<p>There will be 2 versions of ODCdqa:</p>
 <ol type="1">
 <li><a href="#website">Website</a></li>
 <li><a href="#package">Package</a></li>
@@ -5745,14 +5745,14 @@ var createPalette = {
 </section>
 <section id="package" class="level3">
 <h3 class="anchored" data-anchor-id="package">Package</h3>
-<p>For full functionality, ODC Utilities requires R (version 4 and above) along with Python (3.8 and above) installed locally.</p>
+<p>For full functionality, ODCdqa requires R (version 4 and above) along with Python (3.8 and above) installed locally.</p>
 <ul>
 <li>packages listed in <code>requirements.R</code> and <code>requirements.txt</code> are required for R and Python respectively</li>
 </ul>
 <p>Because the application is primarily coded in R, ODC Data Quality App can still be run without a local Python installation. However, the user will not be able to generate the interactive data exploration file.</p>
 <section id="install" class="level4">
 <h4 class="anchored" data-anchor-id="install">Install</h4>
-<p>To install ODC Utilities, run the following lines of code in R console:</p>
+<p>To install ODCdqa, run the following lines of code in R console:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -5811,8 +5811,8 @@ var createPalette = {
 <p>The overall sequence of the core functions is as follows:</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="DiagrammeR html-widget html-fill-item" id="htmlwidget-d06557751a4c974b6c8f" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-d06557751a4c974b6c8f">{"x":{"diagram":"\ngraph LR\n  A{Import dataset} --> validate_structure\n  B{Import data dictionary} --> validate_schema\n  validate_structure --> validate_odc\n  validate_schema --> validate_odc\n  validate_odc --> checklist_to_df\n  checklist_to_df --> render_check_table\n  render_check_table --> C{Run app and display}\n"},"evals":[],"jsHooks":[]}</script>
+<div class="DiagrammeR html-widget html-fill-item" id="htmlwidget-1d6ee3cfd6826709bb74" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-1d6ee3cfd6826709bb74">{"x":{"diagram":"\ngraph LR\n  A{Import dataset} --> validate_structure\n  B{Import data dictionary} --> validate_schema\n  validate_structure --> validate_odc\n  validate_schema --> validate_odc\n  validate_odc --> checklist_to_df\n  checklist_to_df --> render_check_table\n  render_check_table --> C{Run app and display}\n"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <ul>
@@ -5897,7 +5897,7 @@ var createPalette = {
 </section>
 <section id="package-version-only" class="level3">
 <h3 class="anchored" data-anchor-id="package-version-only">Package version only</h3>
-<p>The functions listed below are specific to the package version of the ODC Utilities.</p>
+<p>The functions listed below are specific to the package version of the ODCdqa.</p>
 <section id="startapp" class="level4">
 <h4 class="anchored" data-anchor-id="startapp">startApp</h4>
 <p>Argument(s):</p>

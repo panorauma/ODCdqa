@@ -1,5 +1,5 @@
 ---
-title: "ODC Utilities"
+title: "ODCdqa"
 author: "Kenneth A Fond, Hannah Radabaugh, Romana Vavrek, Karim Fouad, Jeffrey S Grethe, Maryann E Martone, Adam R Ferguson, Abel Torres-Espin"
 format: 
   html:
@@ -21,9 +21,9 @@ library(DiagrammeR)
 
 ## Introduction
 
-ODC Utilities is a collection of tools created by the ODC team to facilitate and simplify the process of preparing datasets and data dictionaries for upload to the ODC platform.
+ODCdqa is a collection of tools created by the ODC team to facilitate and simplify the process of preparing datasets and data dictionaries for upload to the ODC platform.
 
-There will be 2 versions of ODC Utilities:
+There will be 2 versions of ODCdqa:
 
 1. [Website](#website)
 1. [Package](#package)
@@ -53,7 +53,7 @@ The time it takes to complete this process will vary depending on size of upload
 
 ### Package
 
-For full functionality, ODC Utilities requires R (version 4 and above) along with Python (3.8 and above) installed locally.
+For full functionality, ODCdqa requires R (version 4 and above) along with Python (3.8 and above) installed locally.
 
 - packages listed in `requirements.R` and `requirements.txt` are required for R and Python respectively
 
@@ -61,7 +61,7 @@ Because the application is primarily coded in R, ODC Data Quality App can still 
 
 #### Install
 
-To install ODC Utilities, run the following lines of code in R console:
+To install ODCdqa, run the following lines of code in R console:
 
 ```{r}
 #| echo: true
@@ -228,7 +228,7 @@ Argument(s):
 
 ### Package version only
 
-The functions listed below are specific to the package version of the ODC Utilities.
+The functions listed below are specific to the package version of the ODCdqa.
 
 #### startApp
 
