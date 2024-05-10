@@ -33,4 +33,4 @@ jobs:
           file: ./Dockerfile
           push: true
           platforms: linux/amd64
-          tags: ghcr.io/panorauma/dqa:${{ github.event.release.tag_name }}
+          tags: ghcr.io/panorauma/dqa:${{ github.ref_name }}
