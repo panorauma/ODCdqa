@@ -1,5 +1,5 @@
 #base img + install python
-FROM rocker/shiny-verse:4.3.3
+FROM rocker/shiny-verse:4.4.0
 RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \

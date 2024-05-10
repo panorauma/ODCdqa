@@ -39,7 +39,7 @@ ui <- fluidPage(
                                         word-wrap: break-word;overflow-x:visible;
                                         font-family: monospace;}"),
   
-  navbarPage("Open Data Commons (ODC) data quality app (v0.1, beta)",
+  navbarPage("Open Data Commons (ODC) data quality app (v0.2.0, beta)",
              tabPanel("Home",
                       tags$div(style = "width:40%; text-align: center;margin-left: auto;margin-right: auto;", 
                       class = "well",
