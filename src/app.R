@@ -56,7 +56,8 @@ ui <- fluidPage(
                                   data publication through the ODCs"),
 
                       
-                           tags$p(tags$strong("Data explorer:"), "It provides an interactive report of the content of your data!")
+                           tags$p(tags$strong("Data explorer:"), "It provides an interactive report of the content of your data!"),
+                           actionButton("next_begin","Begin")
                         )
               ),
              
@@ -84,7 +85,8 @@ ui <- fluidPage(
                                                  multiple = FALSE,
                                                  accept = c("text/csv",
                                                             "text/comma-separated-values,text/plain",
-                                                            ".csv"))
+                                                            ".csv")),
+                                        actionButton("next_startchecks","Next step")
                                      ),
                         ),
                         
@@ -359,6 +361,16 @@ server <- function(input, output, session) {
         easyClose = TRUE
       )
     )
+  })
+
+  ## Next page: Begin
+  observeEvent(input$next_begin, {
+    updateNavbarPage(session, "navbarpage", selected = "Start Here")
+  })
+  
+  ## Next page: ODC data checks
+  observeEvent(input$next_startchecks, {
+    updateNavbarPage(session, "navbarpage", selected = "ODC data checks")
   })
 }
 
