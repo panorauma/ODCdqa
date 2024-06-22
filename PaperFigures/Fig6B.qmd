@@ -1,5 +1,5 @@
 ---
-title: "Figure 5B"
+title: "Figure 6B"
 format: 
     html:
         code-fold: false
@@ -19,11 +19,13 @@ execute:
   eval: true
 ---
 
+## Figure
+
 ```{mermaid}
 flowchart LR
   A([R <br/> programming <br/> language]) & B([Python <br/> programming <br/> language]) & C([Docker]) --> P{git} --> D[(ODCdqa Repo)]
 
-  D --> |Use:|E{GitHub Actions} --> |Create:|F{{ODCdqaImage}} --> |Deploy to:|G{AWS EC2} --> |Host:|H{{ODCdqa <br/> Web Application}}
+  D --> |Use:|E{GitHub Actions} --> |Create:|F{{ODCdqaImage}} --> |Deploy to:|G{ShinyIO} --> |Host:|H{{ODCdqa <br/> Web Application}}
   F --> |Upload to:|N[(GHCR)] --> |Host:|O{{ODCdqaImage}}
 
   E --> |Deploy to:|I[(GitHub Pages)] --> |Host:|J{{Vignettes}}
@@ -71,3 +73,29 @@ flowchart LR
   classDef cicd fill: #ffcc99
   class E,K,G,P cicd;
 ```
+
+## Key
+
+```{mermaid}
+flowchart TB
+  I1([Input])
+  I2{Tool}
+  I3[(Database)]
+  I4{{Output}}
+
+  classDef inputs fill: #F8FF95
+  class I1 inputs;
+
+  classDef tool fill: #ffcc99
+  class I2 tool;
+
+  classDef db fill: #98fb98
+  class I3 db;
+
+  classDef output fill: #AEDEFC
+  class I4 output;
+```
+
+Note:
+
+Panels and labels are created manually.

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.4.555">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -5677,11 +5677,9 @@ var createPalette = {
   </ul></li>
   <li><a href="#miscellaneous" id="toc-miscellaneous" class="nav-link" data-scroll-target="#miscellaneous">Miscellaneous</a>
   <ul>
-  <li><a href="#startapp" id="toc-startapp" class="nav-link" data-scroll-target="#startapp">startApp</a>
-  <ul>
+  <li><a href="#startapp" id="toc-startapp" class="nav-link" data-scroll-target="#startapp">startApp</a></li>
   <li><a href="#library.dynam.unload" id="toc-library.dynam.unload" class="nav-link" data-scroll-target="#library.dynam.unload">library.dynam.unload</a></li>
   <li><a href="#system.file" id="toc-system.file" class="nav-link" data-scroll-target="#system.file">system.file</a></li>
-  </ul></li>
   <li><a href="#empty_data_dict-1" id="toc-empty_data_dict-1" class="nav-link" data-scroll-target="#empty_data_dict-1">empty_data_dict</a></li>
   <li><a href="#summary.odccheck" id="toc-summary.odccheck" class="nav-link" data-scroll-target="#summary.odccheck">summary.odcCheck</a></li>
   </ul></li>
@@ -5784,7 +5782,7 @@ var createPalette = {
 </section>
 <section id="install-1" class="level4">
 <h4 class="anchored" data-anchor-id="install-1">Install</h4>
-<p>To install/run the Docker image after Docker application is installed:</p>
+<p>To install/run the Docker image after Docker application is installed. In terminal, run:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--name</span> odcdqa <span class="at">-it</span> <span class="at">-p</span> 3838:3838 ghcr.io/panorauma/dqa:main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -5792,6 +5790,7 @@ var createPalette = {
 <ul>
 <li><code>docker run</code> = start Docker image</li>
 <li><code>--name odcdqa</code> = rename the container to <code>odcdqa</code></li>
+<li><code>-it</code> = interactive terminal</li>
 <li><code>-p 3838:3838</code> = forward port 3838 in container to 3838 on host machine, the first number is host port, second is container port</li>
 <li><code>ghcr.io/panorauma/dqa:main</code> = where Docker image is located</li>
 </ul>
@@ -5818,7 +5817,7 @@ var createPalette = {
 </ul>
 <section id="data-quality-checks-only" class="level4">
 <h4 class="anchored" data-anchor-id="data-quality-checks-only">Data Quality Checks Only</h4>
-<p>Basic template for performing data quality checks on a single dataset with corresponding data dictionary.</p>
+<p>Basic template for performing data quality checks on a single dataset with corresponding data dictionary. R code:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#import dataset &amp; data dictionary</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;PATH&quot;</span>)</span>
@@ -5839,7 +5838,7 @@ var createPalette = {
 </section>
 <section id="eda-report-only" class="level4">
 <h4 class="anchored" data-anchor-id="eda-report-only">EDA Report Only</h4>
-<p>Basic template for creating EDA report html file.</p>
+<p>Basic template for creating EDA report html file. Python code:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#import dependencies</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">import</span> os</span>
@@ -5892,8 +5891,8 @@ var createPalette = {
 <p>The overall sequence of the core functions is as follows:</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="DiagrammeR html-widget html-fill-item" id="htmlwidget-0edb7dff6293898508d4" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-0edb7dff6293898508d4">{"x":{"diagram":"\ngraph LR\n  A{Import dataset} --> validate_structure\n  B{Import data dictionary} --> validate_schema\n  validate_structure --> validate_odc\n  validate_schema --> validate_odc\n  validate_odc --> checklist_to_df\n  checklist_to_df --> render_check_table\n  render_check_table --> C{Run app and display}\n"},"evals":[],"jsHooks":[]}</script>
+<div class="DiagrammeR html-widget html-fill-item" id="htmlwidget-144bc8f161fa4d587806" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-144bc8f161fa4d587806">{"x":{"diagram":"\ngraph LR\n  A{Import dataset} --> validate_structure\n  B{Import data dictionary} --> validate_schema\n  validate_structure --> validate_odc\n  validate_schema --> validate_odc\n  validate_odc --> checklist_to_df\n  checklist_to_df --> render_check_table\n  render_check_table --> C{Run app and display}\n"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <ul>
@@ -6002,14 +6001,14 @@ var createPalette = {
 <ul>
 <li><strong>loadReqPackages</strong>: Starts app and loads all required libraries necessary for app to function. Default is <code>TRUE</code>.</li>
 </ul>
-<section id="library.dynam.unload" class="level5">
-<h5 class="anchored" data-anchor-id="library.dynam.unload">library.dynam.unload</h5>
+</section>
+<section id="library.dynam.unload" class="level4">
+<h4 class="anchored" data-anchor-id="library.dynam.unload">library.dynam.unload</h4>
 <p>Used to install required libraries if they are not present in list of user’s installed packages.</p>
 </section>
-<section id="system.file" class="level5">
-<h5 class="anchored" data-anchor-id="system.file">system.file</h5>
+<section id="system.file" class="level4">
+<h4 class="anchored" data-anchor-id="system.file">system.file</h4>
 <p>Used to install required libraries if they are not present in list of user’s installed packages.</p>
-</section>
 </section>
 <section id="empty_data_dict-1" class="level4">
 <h4 class="anchored" data-anchor-id="empty_data_dict-1">empty_data_dict</h4>

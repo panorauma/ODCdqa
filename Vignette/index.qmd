@@ -98,7 +98,7 @@ This is because the base layer of the Docker image (rocker/shiny-verse) is only 
 
 #### Install
 
-To install/run the Docker image after Docker application is installed:
+To install/run the Docker image after Docker application is installed. In terminal, run:
 
 ```{bash}
 #| echo: true
@@ -109,6 +109,7 @@ Command arguments:
 
 - `docker run` = start Docker image
 - `--name odcdqa` = rename the container to `odcdqa`
+- `-it` = interactive terminal
 - `-p 3838:3838` = forward port 3838 in container to 3838 on host machine, the first number is host port, second is container port
 - `ghcr.io/panorauma/dqa:main` = where Docker image is located
 
@@ -133,7 +134,7 @@ For full functionality, ODCdqa requires R (version 4 and above) along with Pytho
 
 #### Data Quality Checks Only
 
-Basic template for performing data quality checks on a single dataset with corresponding data dictionary.
+Basic template for performing data quality checks on a single dataset with corresponding data dictionary. R code:
 
 ```{r}
 #| echo: true
@@ -156,7 +157,7 @@ render_check_table(structure_checks = all$structure,
 
 #### EDA Report Only
 
-Basic template for creating EDA report html file.
+Basic template for creating EDA report html file. Python code:
 
 ```{bash}
 #| echo: true
@@ -328,11 +329,11 @@ Allows users of the package version to start application using a single line of 
 
 - __loadReqPackages__: Starts app and loads all required libraries necessary for app to function. Default is `TRUE`.
 
-##### library.dynam.unload
+#### library.dynam.unload
 
 Used to install required libraries if they are not present in list of user's installed packages.
 
-##### system.file
+#### system.file
 
 Used to install required libraries if they are not present in list of user's installed packages.
 

@@ -1,4 +1,4 @@
-#Figure 5A
+#Figure 6A
 
 library(ggplot2)
 library(magick)
