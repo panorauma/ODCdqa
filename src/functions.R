@@ -500,6 +500,11 @@ validate_schema <- function(dataset,datadic,sch_checks="all"){
     sch_checks <- c("dic_header", "data_extra_header","data_miss_header",
                     "miss_description","miss_title","min_vars",
                     "other_symbols","pos1_char","over_60char")
+  }else{
+    #tbi does not have "min_vars"
+    sch_checks <- c("dic_header", "data_extra_header","data_miss_header",
+                    "miss_description","miss_title",
+                    "other_symbols","pos1_char","over_60char")
   }
 
   checks<-match.arg(sch_checks, c("dic_header", "data_extra_header","data_miss_header",
