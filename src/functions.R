@@ -500,6 +500,11 @@ validate_schema <- function(dataset,datadic,sch_checks="all"){
     sch_checks <- c("dic_header", "data_extra_header","data_miss_header",
                     "miss_description","miss_title","min_vars",
                     "other_symbols","pos1_char","over_60char")
+  }else{
+    #tbi does not have "min_vars"
+    sch_checks <- c("dic_header", "data_extra_header","data_miss_header",
+                    "miss_description","miss_title",
+                    "other_symbols","pos1_char","over_60char")
   }
 
   checks<-match.arg(sch_checks, c("dic_header", "data_extra_header","data_miss_header",
@@ -703,7 +708,7 @@ validate_structure <- function(dataset,str_checks="all"){ #MARK: validate_struct
   #blank row
   if ("blank_row"%in%checks){
     blank_row<-apply(dataset, 1, function(x){
-      sum(x == '' | is.na(x) | "na",na.rm = T)/length(x)
+      sum(x == '' | is.na(x) | x == "na",na.rm = T)/length(x)
     })
     results[['blank_row']]<-list('n_blank_row'=sum(blank_row==1),
                                  'which_blank_row'=which(blank_row==1))
@@ -712,7 +717,7 @@ validate_structure <- function(dataset,str_checks="all"){ #MARK: validate_struct
   #blank column
   if ("blank_column"%in%checks){
     blank_column<-apply(dataset, 2, function(x){
-      sum(x == '' | is.na(x) | "na",na.rm = T)/length(x)
+      sum(x == '' | is.na(x) | x == "na",na.rm = T)/length(x)
     })
     results[['blank_column']]<-list('n_blank_column'=sum(blank_column==1),
                                     'which_blank_column'=names(which(blank_column==1)))

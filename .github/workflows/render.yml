@@ -16,7 +16,6 @@ jobs:
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
         with:
-          # To install LaTeX to build PDF book 
           tinytex: true 
       
       - name: Render Quarto Project
@@ -27,5 +26,4 @@ jobs:
         with:
           target: gh-pages
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # this secret is always available for github actions
-      
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

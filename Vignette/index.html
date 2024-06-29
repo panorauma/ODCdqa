@@ -2,11 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.4.555">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Kenneth A Fond, Hannah Radabaugh, Romana Vavrek, Karim Fouad, Jeffrey S Grethe, Maryann E Martone, Adam R Ferguson, Abel Torres-Espin">
+<meta name="author" content="Kenneth A Fond, Hannah Radabaugh, Romana Vavrek, Karim Fouad">
+<meta name="author" content="Jeffrey S Grethe, Maryann E Martone, Adam R Ferguson, Abel Torres-Espin">
 
 <title>ODCdqa</title>
 <style>
@@ -5645,10 +5646,18 @@ var createPalette = {
   <li><a href="#package" id="toc-package" class="nav-link" data-scroll-target="#package">Package</a>
   <ul>
   <li><a href="#install" id="toc-install" class="nav-link" data-scroll-target="#install">Install</a></li>
-  <li><a href="#run-application" id="toc-run-application" class="nav-link" data-scroll-target="#run-application">Run application</a>
-  <ul>
-  <li><a href="#code-only" id="toc-code-only" class="nav-link" data-scroll-target="#code-only">Code Only</a></li>
   </ul></li>
+  <li><a href="#docker-image" id="toc-docker-image" class="nav-link" data-scroll-target="#docker-image">Docker Image</a>
+  <ul>
+  <li><a href="#arm64-or-aarch64-architecture" id="toc-arm64-or-aarch64-architecture" class="nav-link" data-scroll-target="#arm64-or-aarch64-architecture">arm64 or aarch64 Architecture</a></li>
+  <li><a href="#install-1" id="toc-install-1" class="nav-link" data-scroll-target="#install-1">Install</a></li>
+  <li><a href="#interact-with-graphical-user-interface" id="toc-interact-with-graphical-user-interface" class="nav-link" data-scroll-target="#interact-with-graphical-user-interface">Interact with Graphical User Interface</a></li>
+  <li><a href="#generate-exploratory-data-report" id="toc-generate-exploratory-data-report" class="nav-link" data-scroll-target="#generate-exploratory-data-report">Generate Exploratory Data Report</a></li>
+  </ul></li>
+  <li><a href="#advanced-use-cases" id="toc-advanced-use-cases" class="nav-link" data-scroll-target="#advanced-use-cases">Advanced Use Cases</a>
+  <ul>
+  <li><a href="#data-quality-checks-only" id="toc-data-quality-checks-only" class="nav-link" data-scroll-target="#data-quality-checks-only">Data Quality Checks Only</a></li>
+  <li><a href="#eda-report-only" id="toc-eda-report-only" class="nav-link" data-scroll-target="#eda-report-only">EDA Report Only</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a>
@@ -5660,21 +5669,18 @@ var createPalette = {
   <li><a href="#validate_structure" id="toc-validate_structure" class="nav-link" data-scroll-target="#validate_structure">validate_structure</a></li>
   <li><a href="#validate_schema" id="toc-validate_schema" class="nav-link" data-scroll-target="#validate_schema">validate_schema</a></li>
   </ul></li>
+  <li><a href="#checklist_to_df" id="toc-checklist_to_df" class="nav-link" data-scroll-target="#checklist_to_df">checklist_to_df</a></li>
+  <li><a href="#empty_data_dict" id="toc-empty_data_dict" class="nav-link" data-scroll-target="#empty_data_dict">empty_data_dict</a></li>
   <li><a href="#render_check_table" id="toc-render_check_table" class="nav-link" data-scroll-target="#render_check_table">render_check_table</a></li>
   <li><a href="#first_char_letter" id="toc-first_char_letter" class="nav-link" data-scroll-target="#first_char_letter">first_char_letter</a></li>
   <li><a href="#var_other_symbols" id="toc-var_other_symbols" class="nav-link" data-scroll-target="#var_other_symbols">var_other_symbols</a></li>
   </ul></li>
-  <li><a href="#package-version-only" id="toc-package-version-only" class="nav-link" data-scroll-target="#package-version-only">Package version only</a>
-  <ul>
-  <li><a href="#startapp" id="toc-startapp" class="nav-link" data-scroll-target="#startapp">startApp</a>
-  <ul>
-  <li><a href="#library.dynam.unload" id="toc-library.dynam.unload" class="nav-link" data-scroll-target="#library.dynam.unload">library.dynam.unload</a></li>
-  <li><a href="#system.file" id="toc-system.file" class="nav-link" data-scroll-target="#system.file">system.file</a></li>
-  </ul></li>
-  </ul></li>
   <li><a href="#miscellaneous" id="toc-miscellaneous" class="nav-link" data-scroll-target="#miscellaneous">Miscellaneous</a>
   <ul>
-  <li><a href="#empty_data_dict" id="toc-empty_data_dict" class="nav-link" data-scroll-target="#empty_data_dict">empty_data_dict</a></li>
+  <li><a href="#startapp" id="toc-startapp" class="nav-link" data-scroll-target="#startapp">startApp</a></li>
+  <li><a href="#library.dynam.unload" id="toc-library.dynam.unload" class="nav-link" data-scroll-target="#library.dynam.unload">library.dynam.unload</a></li>
+  <li><a href="#system.file" id="toc-system.file" class="nav-link" data-scroll-target="#system.file">system.file</a></li>
+  <li><a href="#empty_data_dict-1" id="toc-empty_data_dict-1" class="nav-link" data-scroll-target="#empty_data_dict-1">empty_data_dict</a></li>
   <li><a href="#summary.odccheck" id="toc-summary.odccheck" class="nav-link" data-scroll-target="#summary.odccheck">summary.odcCheck</a></li>
   </ul></li>
   </ul></li>
@@ -5690,6 +5696,7 @@ var createPalette = {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">ODCdqa</h1>
+<p class="subtitle lead">Open Data Commons SCI/TBI Data Quality App</p>
 </div>
 
 
@@ -5697,9 +5704,10 @@ var createPalette = {
 <div class="quarto-title-meta">
 
     <div>
-    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Authors</div>
     <div class="quarto-title-meta-contents">
-             <p>Kenneth A Fond, Hannah Radabaugh, Romana Vavrek, Karim Fouad, Jeffrey S Grethe, Maryann E Martone, Adam R Ferguson, Abel Torres-Espin </p>
+             <p>Kenneth A Fond, Hannah Radabaugh, Romana Vavrek, Karim Fouad </p>
+             <p>Jeffrey S Grethe, Maryann E Martone, Adam R Ferguson, Abel Torres-Espin </p>
           </div>
   </div>
     
@@ -5715,48 +5723,38 @@ var createPalette = {
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>ODCdqa is a collection of tools created by the ODC team to facilitate and simplify the process of preparing datasets and data dictionaries for upload to the ODC platform.</p>
-<p>There will be 2 versions of ODCdqa:</p>
-<ol type="1">
-<li><a href="#website">Website</a></li>
-<li><a href="#package">Package</a></li>
-</ol>
-<p>The core functions will be the same. Each version might contain additional code to allow the application to work in the specified environment. Read more at <a href="#package-version-only">package version specific functions</a>.</p>
 </section>
 <section id="quick-start" class="level2">
 <h2 class="anchored" data-anchor-id="quick-start">Quick Start</h2>
+<p>ODCdqa is offered in 3 versions:</p>
+<p><em>click on link to jump to respective section</em></p>
+<ol type="1">
+<li><a href="#website">Website</a>: Quality Checks, graphical interface</li>
+<li><a href="#package">Package</a>: Quality Checks, no graphical interface</li>
+<li><a href="#docker-image">Docker Image</a>: Quality Checks + Exporatory Data Report, graphical interface</li>
+</ol>
 <section id="website" class="level3">
 <h3 class="anchored" data-anchor-id="website">Website</h3>
 <ol type="1">
-<li>Navigate to <a href>site</a></li>
-<li>Click “Start Here” tab</li>
+<li>Navigate to <a href="https://odcdqa.onrender.com">https://odcdqa.onrender.com</a></li>
+<li>In <code>Start Here</code> tab, click <code>Begin</code> button</li>
 <li>Select ODC community</li>
-<li>Click on “Browse” under Dataset to upload dataset (in .csv format)</li>
-<li>Click on “Browse” under Data dic to upload dataset (in .csv format)</li>
-<li>Click “ODC data checks” tab</li>
-<li>Click on “Run Checks” to start checks</li>
+<li>Click on <code>Browse</code> button under Dataset to upload dataset (in .csv format)</li>
+<li>Click on <code>Browse</code> button under Data dic to upload dataset (in .csv format)</li>
+<li>Click on <code>Next</code> button</li>
+<li>In <code>ODC data checks</code> tab, click <code>Run Checks</code> to start checks</li>
 </ol>
-<p>(Optional):</p>
-<p>To generate an interactive data exploration page from the uploaded dataset and data dictionary:</p>
-<ol type="1">
-<li>Navigate to the “Data Explorer” tab</li>
-<li>Click “Generate EDA”</li>
-</ol>
-<p>The time it takes to complete this process will vary depending on size of uploaded dataset.</p>
 </section>
 <section id="package" class="level3">
 <h3 class="anchored" data-anchor-id="package">Package</h3>
-<p>For full functionality, ODCdqa requires R (version 4 and above) along with Python (3.8 and above) installed locally.</p>
-<ul>
-<li>packages listed in <code>requirements.R</code> and <code>requirements.txt</code> are required for R and Python respectively</li>
-</ul>
-<p>Because the application is primarily coded in R, ODC Data Quality App can still be run without a local Python installation. However, the user will not be able to generate the interactive data exploration file.</p>
+<p>Source code: <a href="https://github.com/panorauma/ODCdqaFunctions">ODCdqaFunctions</a></p>
 <section id="install" class="level4">
 <h4 class="anchored" data-anchor-id="install">Install</h4>
-<p>To install ODCdqa, run the following lines of code in R console:</p>
+<p>To install, run the following lines of code in R console:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;panorauma/ODCdqa&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;panorauma/ODCdqaFunctions&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To install the required R packages, run the following line in R console:</p>
 <div class="cell">
@@ -5772,16 +5770,54 @@ var createPalette = {
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> pip3 install <span class="at">-r</span> requirements.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="run-application" class="level4">
-<h4 class="anchored" data-anchor-id="run-application">Run application</h4>
+</section>
+<section id="docker-image" class="level3">
+<h3 class="anchored" data-anchor-id="docker-image">Docker Image</h3>
+<p>Source code: <a href="https://github.com/orgs/panorauma/packages?repo_name=ODCdqa">ODCdqa Docker Image</a></p>
+<p><strong><em>Note:</em></strong> <a href="https://www.docker.com/">Docker</a> is required</p>
+<section id="arm64-or-aarch64-architecture" class="level4">
+<h4 class="anchored" data-anchor-id="arm64-or-aarch64-architecture">arm64 or aarch64 Architecture</h4>
+<p>The Docker image is built for the x86_64 aka amd64 architecture. As such, mileage will vary for devices with non-x86_64 architecture such as ARM. arm64 and aarch64 are both a part of ARM architecture, they just have different names.</p>
+<p>This is because the base layer of the Docker image (rocker/shiny-verse) is only offered for amd64 architecture. ARM architecture support will be added once an ARM version of rocker/shiny-verse becomes available.</p>
+</section>
+<section id="install-1" class="level4">
+<h4 class="anchored" data-anchor-id="install-1">Install</h4>
+<p>To install/run the Docker image after Docker application is installed. In terminal, run:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">startApp</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--name</span> odcdqa <span class="at">-it</span> <span class="at">-p</span> 3838:3838 ghcr.io/panorauma/dqa:main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>By default, this function will automatically import required libraries after user has installed them to their system. Read more about the <code>startApp</code> function <a href="#startapp">here</a>.</p>
-<p>A pop-up window will appear allowing the user to interact with the application.</p>
-<section id="code-only" class="level5">
-<h5 class="anchored" data-anchor-id="code-only">Code Only</h5>
-<p>For advanced users who wish to use the application entirely through code:</p>
+<p>Command arguments:</p>
+<ul>
+<li><code>docker run</code> = start Docker image</li>
+<li><code>--name odcdqa</code> = rename the container to <code>odcdqa</code></li>
+<li><code>-it</code> = interactive terminal</li>
+<li><code>-p 3838:3838</code> = forward port 3838 in container to 3838 on host machine, the first number is host port, second is container port</li>
+<li><code>ghcr.io/panorauma/dqa:main</code> = where Docker image is located</li>
+</ul>
+</section>
+<section id="interact-with-graphical-user-interface" class="level4">
+<h4 class="anchored" data-anchor-id="interact-with-graphical-user-interface">Interact with Graphical User Interface</h4>
+<p>In browser window, navigate to localhost using <code>http://localhost:3838</code> or <code>http://localhost:PORT</code> if changed in docker run command</p>
+</section>
+<section id="generate-exploratory-data-report" class="level4">
+<h4 class="anchored" data-anchor-id="generate-exploratory-data-report">Generate Exploratory Data Report</h4>
+<p>To generate an interactive data exploration page from the uploaded dataset and data dictionary:</p>
+<ol type="1">
+<li>Navigate to the “Data Explorer” tab</li>
+<li>Click “Generate EDA”</li>
+</ol>
+<p><strong><em>Note:</em></strong> The time it takes to complete this process will depend on size of uploaded dataset.</p>
+</section>
+</section>
+<section id="advanced-use-cases" class="level3">
+<h3 class="anchored" data-anchor-id="advanced-use-cases">Advanced Use Cases</h3>
+<p>For full functionality, ODCdqa requires R (version 4 and above) along with Python (3.8 and above) installed locally.</p>
+<ul>
+<li>packages listed in <code>setup/requirements.R</code> and <code>setup/requirements.txt</code> are required for R and Python respectively</li>
+</ul>
+<section id="data-quality-checks-only" class="level4">
+<h4 class="anchored" data-anchor-id="data-quality-checks-only">Data Quality Checks Only</h4>
+<p>Basic template for performing data quality checks on a single dataset with corresponding data dictionary. R code:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#import dataset &amp; data dictionary</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;PATH&quot;</span>)</span>
@@ -5800,6 +5836,50 @@ var createPalette = {
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">schema_checks =</span> all<span class="sc">$</span>schema)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
+<section id="eda-report-only" class="level4">
+<h4 class="anchored" data-anchor-id="eda-report-only">EDA Report Only</h4>
+<p>Basic template for creating EDA report html file. Python code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#import dependencies</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">import</span> os</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">import</span> sys</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">import</span> subprocess</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">import</span> pandas as pd</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">from</span> ydata_profiling import ProfileReport</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="ex">orig_filename</span> = <span class="st">&quot;FILENAME&quot;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#import dataset + data dict</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="ex">df_data</span> = pd.read_csv<span class="er">(</span><span class="st">&quot;DATASET&quot;</span><span class="kw">)</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="ex">df_dic</span> = pd.read_csv<span class="er">(</span><span class="st">&quot;DATADICT&quot;</span><span class="kw">)</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#create &amp; save profile report as &quot;Profile.html&quot;</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="ex">profile</span> = df_data.profile_report<span class="er">(</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="va">title</span><span class="op">=</span><span class="st">&quot;Profile Report for &quot;</span>+orig_filename,</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="ex">minimal</span> = True,</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="va">infer_dtypes</span><span class="op">=</span>True,</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="va">orange_mode</span><span class="op">=</span>True,</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="va">dataset</span><span class="op">=</span>{</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;description&quot;</span><span class="ex">:</span> <span class="st">&quot;Profile Report for &quot;</span>+orig_filename</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span><span class="ex">,</span>    </span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="va">correlations</span><span class="op">=</span>{</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;pearson&quot;</span><span class="ex">:</span> {<span class="st">&quot;calculate&quot;</span>: False},</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;spearman&quot;</span><span class="ex">:</span> {<span class="st">&quot;calculate&quot;</span>: False},</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;kendall&quot;</span><span class="ex">:</span> {<span class="st">&quot;calculate&quot;</span>: False},</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;phi_k&quot;</span><span class="ex">:</span> {<span class="st">&quot;calculate&quot;</span>: False},</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;cramers&quot;</span><span class="ex">:</span> {<span class="st">&quot;calculate&quot;</span>: False},</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span><span class="ex">,</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    <span class="va">variables</span><span class="op">=</span>{</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;descriptions&quot;</span><span class="ex">:</span> df_dic.set_index<span class="er">(</span><span class="st">&quot;VariableName&quot;</span><span class="kw">)</span><span class="fu">.to_dict()</span><span class="ex">[</span><span class="st">&quot;Title&quot;</span><span class="ex">]</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="kw">)</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="ex">profile.to_file</span><span class="er">(</span><span class="va">output_file</span><span class="op">=</span><span class="st">&quot;Profile.html&quot;</span>,silent=False<span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><code>FILENAME</code> = dataset name</li>
+<li><code>DATASET</code> = path to dataset, csv format</li>
+<li><code>DATADICT</code> = path to data dictionary, csv format</li>
+</ul>
 </section>
 </section>
 </section>
@@ -5811,8 +5891,8 @@ var createPalette = {
 <p>The overall sequence of the core functions is as follows:</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="DiagrammeR html-widget html-fill-item" id="htmlwidget-1d6ee3cfd6826709bb74" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-1d6ee3cfd6826709bb74">{"x":{"diagram":"\ngraph LR\n  A{Import dataset} --> validate_structure\n  B{Import data dictionary} --> validate_schema\n  validate_structure --> validate_odc\n  validate_schema --> validate_odc\n  validate_odc --> checklist_to_df\n  checklist_to_df --> render_check_table\n  render_check_table --> C{Run app and display}\n"},"evals":[],"jsHooks":[]}</script>
+<div class="DiagrammeR html-widget html-fill-item" id="htmlwidget-144bc8f161fa4d587806" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-144bc8f161fa4d587806">{"x":{"diagram":"\ngraph LR\n  A{Import dataset} --> validate_structure\n  B{Import data dictionary} --> validate_schema\n  validate_structure --> validate_odc\n  validate_schema --> validate_odc\n  validate_odc --> checklist_to_df\n  checklist_to_df --> render_check_table\n  render_check_table --> C{Run app and display}\n"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <ul>
@@ -5864,6 +5944,22 @@ var createPalette = {
 </ul>
 </section>
 </section>
+<section id="checklist_to_df" class="level4">
+<h4 class="anchored" data-anchor-id="checklist_to_df">checklist_to_df</h4>
+<p>Tidy results of checks into df to display in app</p>
+<p>Argument(s):</p>
+<ul>
+<li><strong>check_list</strong>: Results of structure/schema check.</li>
+</ul>
+</section>
+<section id="empty_data_dict" class="level4">
+<h4 class="anchored" data-anchor-id="empty_data_dict">empty_data_dict</h4>
+<p>Create empty data dict template (if no data dict uploaded)</p>
+<p>Argument(s):</p>
+<ul>
+<li><strong>upload_dataset</strong>: Dataframe of uploaded dataset csv file.</li>
+</ul>
+</section>
 <section id="render_check_table" class="level4">
 <h4 class="anchored" data-anchor-id="render_check_table">render_check_table</h4>
 <p>This function presents the results of <a href="#validate_odc"><code>validate_odc</code></a> as an interactive data table inside the application. The results are color-coded based on the following:</p>
@@ -5895,9 +5991,9 @@ var createPalette = {
 </ul>
 </section>
 </section>
-<section id="package-version-only" class="level3">
-<h3 class="anchored" data-anchor-id="package-version-only">Package version only</h3>
-<p>The functions listed below are specific to the package version of the ODCdqa.</p>
+<section id="miscellaneous" class="level3">
+<h3 class="anchored" data-anchor-id="miscellaneous">Miscellaneous</h3>
+<p>The functions below are not part of the core workflow or are depreciated.</p>
 <section id="startapp" class="level4">
 <h4 class="anchored" data-anchor-id="startapp">startApp</h4>
 <p>Argument(s):</p>
@@ -5905,21 +6001,17 @@ var createPalette = {
 <ul>
 <li><strong>loadReqPackages</strong>: Starts app and loads all required libraries necessary for app to function. Default is <code>TRUE</code>.</li>
 </ul>
-<section id="library.dynam.unload" class="level5">
-<h5 class="anchored" data-anchor-id="library.dynam.unload">library.dynam.unload</h5>
+</section>
+<section id="library.dynam.unload" class="level4">
+<h4 class="anchored" data-anchor-id="library.dynam.unload">library.dynam.unload</h4>
 <p>Used to install required libraries if they are not present in list of user’s installed packages.</p>
 </section>
-<section id="system.file" class="level5">
-<h5 class="anchored" data-anchor-id="system.file">system.file</h5>
+<section id="system.file" class="level4">
+<h4 class="anchored" data-anchor-id="system.file">system.file</h4>
 <p>Used to install required libraries if they are not present in list of user’s installed packages.</p>
 </section>
-</section>
-</section>
-<section id="miscellaneous" class="level3">
-<h3 class="anchored" data-anchor-id="miscellaneous">Miscellaneous</h3>
-<p>The functions below are not part of the core workflow or are depreciated.</p>
-<section id="empty_data_dict" class="level4">
-<h4 class="anchored" data-anchor-id="empty_data_dict">empty_data_dict</h4>
+<section id="empty_data_dict-1" class="level4">
+<h4 class="anchored" data-anchor-id="empty_data_dict-1">empty_data_dict</h4>
 <p>This function will generate a data dictionary template if a dataset is uploaded without an accompanying data dictionary. The user can then download and fill in this template.</p>
 <p>Argument(s):</p>
 <ul>
@@ -5934,7 +6026,7 @@ var createPalette = {
 </section>
 <section id="license" class="level2">
 <h2 class="anchored" data-anchor-id="license">License</h2>
-<p>MIT License</p>
+<p><a href="../LICENSE">MIT License</a></p>
 <p>Copyright (c) 2022 The Regents of the University of California</p>
 </section>
 <section id="issuessuggestions" class="level2">

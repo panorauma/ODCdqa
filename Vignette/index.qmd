@@ -1,6 +1,9 @@
 ---
 title: "ODCdqa"
-author: "Kenneth A Fond, Hannah Radabaugh, Romana Vavrek, Karim Fouad, Jeffrey S Grethe, Maryann E Martone, Adam R Ferguson, Abel Torres-Espin"
+subtitle: "Open Data Commons SCI/TBI Data Quality App"
+author: 
+  - Kenneth A Fond, Hannah Radabaugh, Romana Vavrek, Karim Fouad
+  - Jeffrey S Grethe, Maryann E Martone, Adam R Ferguson, Abel Torres-Espin
 format: 
   html:
     toc: true
@@ -23,51 +26,39 @@ library(DiagrammeR)
 
 ODCdqa is a collection of tools created by the ODC team to facilitate and simplify the process of preparing datasets and data dictionaries for upload to the ODC platform.
 
-There will be 2 versions of ODCdqa:
-
-1. [Website](#website)
-1. [Package](#package)
-
-The core functions will be the same. Each version might contain additional code to allow the application to work in the specified environment. Read more at [package version specific functions](#package-version-only).
-
 ## Quick Start
+
+ODCdqa is offered in 3 versions:
+
+*click on link to jump to respective section*
+
+1. [Website](#website): Quality Checks, graphical interface
+1. [Package](#package): Quality Checks, no graphical interface
+1. [Docker Image](#docker-image): Quality Checks + Exporatory Data Report, graphical interface
 
 ### Website
 
-1. Navigate to [site]()
-1. Click "Start Here" tab
-1. Select ODC community
-1. Click on "Browse" under Dataset to upload dataset (in .csv format)
-1. Click on "Browse" under Data dic to upload dataset (in .csv format)
-1. Click "ODC data checks" tab
-1. Click on "Run Checks" to start checks
-
-(Optional):
-
-To generate an interactive data exploration page from the uploaded dataset and data dictionary:
-
-1. Navigate to the "Data Explorer" tab
-1. Click "Generate EDA"
-
-The time it takes to complete this process will vary depending on size of uploaded dataset.
+1. Navigate to [https://odcdqa.onrender.com](https://odcdqa.onrender.com)
+2. In `Start Here` tab, click `Begin` button
+3. Select ODC community
+4. Click on `Browse` button under Dataset to upload dataset (in .csv format)
+5. Click on `Browse` button under Data dic to upload dataset (in .csv format)
+6. Click on `Next` button
+7. In `ODC data checks` tab, click `Run Checks` to start checks
 
 ### Package
 
-For full functionality, ODCdqa requires R (version 4 and above) along with Python (3.8 and above) installed locally.
-
-- packages listed in `requirements.R` and `requirements.txt` are required for R and Python respectively
-
-Because the application is primarily coded in R, ODC Data Quality App can still be run without a local Python installation. However, the user will not be able to generate the interactive data exploration file.
+Source code: [ODCdqaFunctions](https://github.com/panorauma/ODCdqaFunctions)
 
 #### Install
 
-To install ODCdqa, run the following lines of code in R console:
+To install, run the following lines of code in R console:
 
 ```{r}
 #| echo: true
 install.packages("devtools")
 
-devtools::install_github("panorauma/ODCdqa")
+devtools::install_github("panorauma/ODCdqaFunctions")
 ```
 
 To install the required R packages, run the following line in R console:
@@ -93,20 +84,57 @@ Windows
 python pip3 install -r requirements.txt
 ```
 
-#### Run application
+### Docker Image
 
-```{r}
+Source code: [ODCdqa Docker Image](https://github.com/orgs/panorauma/packages?repo_name=ODCdqa)
+
+***Note:*** [Docker](https://www.docker.com/) is required
+
+#### arm64 or aarch64 Architecture
+
+The Docker image is built for the x86_64 aka amd64 architecture. As such, mileage will vary for devices with non-x86_64 architecture such as ARM. arm64 and aarch64 are both a part of ARM architecture, they just have different names.
+
+This is because the base layer of the Docker image (rocker/shiny-verse) is only offered for amd64 architecture. ARM architecture support will be added once an ARM version of rocker/shiny-verse becomes available.
+
+#### Install
+
+To install/run the Docker image after Docker application is installed. In terminal, run:
+
+```{bash}
 #| echo: true
-startApp()
+docker run --name odcdqa -it -p 3838:3838 ghcr.io/panorauma/dqa:main
 ```
 
-By default, this function will automatically import required libraries after user has installed them to their system. Read more about the `startApp` function [here](#startapp).
+Command arguments:
 
-A pop-up window will appear allowing the user to interact with the application.
+- `docker run` = start Docker image
+- `--name odcdqa` = rename the container to `odcdqa`
+- `-it` = interactive terminal
+- `-p 3838:3838` = forward port 3838 in container to 3838 on host machine, the first number is host port, second is container port
+- `ghcr.io/panorauma/dqa:main` = where Docker image is located
 
-##### Code Only
+#### Interact with Graphical User Interface
 
-For advanced users who wish to use the application entirely through code:
+In browser window, navigate to localhost using `http://localhost:3838` or `http://localhost:PORT` if changed in docker run command
+
+#### Generate Exploratory Data Report
+
+To generate an interactive data exploration page from the uploaded dataset and data dictionary:
+
+1. Navigate to the "Data Explorer" tab
+1. Click "Generate EDA"
+
+***Note:*** The time it takes to complete this process will depend on size of uploaded dataset.
+
+### Advanced Use Cases
+
+For full functionality, ODCdqa requires R (version 4 and above) along with Python (3.8 and above) installed locally.
+
+- packages listed in `setup/requirements.R` and `setup/requirements.txt` are required for R and Python respectively
+
+#### Data Quality Checks Only
+
+Basic template for performing data quality checks on a single dataset with corresponding data dictionary. R code:
 
 ```{r}
 #| echo: true
@@ -126,6 +154,53 @@ all <- validate_odc(
 render_check_table(structure_checks = all$structure,
   schema_checks = all$schema)
 ```
+
+#### EDA Report Only
+
+Basic template for creating EDA report html file. Python code:
+
+```{bash}
+#| echo: true
+
+#import dependencies
+import os
+import sys
+import subprocess
+import pandas as pd
+from ydata_profiling import ProfileReport
+
+orig_filename = "FILENAME"
+
+#import dataset + data dict
+df_data = pd.read_csv("DATASET")
+df_dic = pd.read_csv("DATADICT")
+
+#create & save profile report as "Profile.html"
+profile = df_data.profile_report(
+    title="Profile Report for "+orig_filename,
+    minimal = True,
+    infer_dtypes=True,
+    orange_mode=True,
+    dataset={
+        "description": "Profile Report for "+orig_filename
+    },    
+    correlations={
+        "pearson": {"calculate": False},
+        "spearman": {"calculate": False},
+        "kendall": {"calculate": False},
+        "phi_k": {"calculate": False},
+        "cramers": {"calculate": False},
+    },
+    variables={
+        "descriptions": df_dic.set_index("VariableName").to_dict()["Title"]
+    }
+)
+profile.to_file(output_file="Profile.html",silent=False)
+```
+
+- `FILENAME` = dataset name
+- `DATASET` = path to dataset, csv format
+- `DATADICT` = path to data dictionary, csv format
 
 ## Functions
 
@@ -197,6 +272,22 @@ Argument(s):
 - __datadic__: Passes data dictionary dataframe from global environment into function.
 - __sch_checks__: Variables to use for schema checks. Is "all" for ODC-SCI but not for ODC-TBI.
 
+#### checklist_to_df
+
+Tidy results of checks into df to display in app
+
+Argument(s):
+
+- __check_list__: Results of structure/schema check.
+
+#### empty_data_dict
+
+Create empty data dict template (if no data dict uploaded)
+
+Argument(s):
+
+- __upload_dataset__: Dataframe of uploaded dataset csv file.
+
 #### render_check_table
 
 This function presents the results of [`validate_odc`](#validate_odc) as an interactive data table inside the application. The results are color-coded based on the following:
@@ -226,9 +317,9 @@ Argument(s):
 
 - __string__: Single string to perform check on.
 
-### Package version only
+### Miscellaneous
 
-The functions listed below are specific to the package version of the ODCdqa.
+The functions below are not part of the core workflow or are depreciated. 
 
 #### startApp
 
@@ -238,17 +329,13 @@ Allows users of the package version to start application using a single line of 
 
 - __loadReqPackages__: Starts app and loads all required libraries necessary for app to function. Default is `TRUE`.
 
-##### library.dynam.unload
+#### library.dynam.unload
 
 Used to install required libraries if they are not present in list of user's installed packages.
 
-##### system.file
+#### system.file
 
 Used to install required libraries if they are not present in list of user's installed packages.
-
-### Miscellaneous
-
-The functions below are not part of the core workflow or are depreciated. 
 
 #### empty_data_dict
 
@@ -264,7 +351,7 @@ Used for debugging purposes. Prints the results of [`validate_odc`](#validate_od
 
 ## License
 
-MIT License
+[MIT License](../LICENSE)
 
 Copyright (c) 2022 The Regents of the University of California
 
