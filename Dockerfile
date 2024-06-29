@@ -1,6 +1,6 @@
-#base img + install python
-FROM rocker/shiny-verse:4.4.0
-RUN apt-get update && apt-get install -y \
+#base img + install python (suspend lines: 4-7,11 in hosted)
+FROM rocker/shiny-verse:4.4.1
+RUN apt-get update && apt-get install -y \ 
     python3 \
     python3-pip \
     python3-venv
