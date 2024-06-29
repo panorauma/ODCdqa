@@ -4,19 +4,21 @@ library(shinyjs)
 library(tidyverse)
 library(waiter)
 library(DT)
-library(reticulate)
 
 options(shiny.maxRequestSize = 100*1024^2)
-
-#import other file dependencies (workaround for file not found)
-source("https://raw.githubusercontent.com/panorauma/ODCdqa/main/src/functions.R")
-definition_check<-read.csv("https://raw.githubusercontent.com/panorauma/ODCdqa/main/src/checks%20definitions.csv")
 
 js_code <- "
 shinyjs.browseURL = function(url){
   window.open(url,'_blank');
 }
 "
+
+#---SUSPEND in hosted---#
+library(reticulate)
+
+#import other file dependencies (workaround for file not found)
+source("https://raw.githubusercontent.com/panorauma/ODCdqa/main/src/functions.R")
+definition_check <- read.csv("https://raw.githubusercontent.com/panorauma/ODCdqa/main/src/checks%20definitions.csv")
 
 #create temp path (will be rm when shiny closes) + recreated if no longer exists
 temp_dir <- tempdir(check=TRUE)
@@ -29,6 +31,7 @@ reticulate::py_install("ydata_profiling")
 
 pd <- reticulate:: import("pandas")
 pr <- reticulate:: import("ydata_profiling")
+#------#
 
 #MARK: UI
 ui <- fluidPage(
@@ -39,7 +42,7 @@ ui <- fluidPage(
                                         word-wrap: break-word;overflow-x:visible;
                                         font-family: monospace;}"),
   
-  navbarPage("Open Data Commons (ODC) data quality app (v0.2.0, beta)",
+  navbarPage("Open Data Commons (ODC) data quality app (v0.2.2, beta)",
              tabPanel("Home",
                       tags$div(style = "width:40%; text-align: center;margin-left: auto;margin-right: auto;", 
                       class = "well",
@@ -52,12 +55,17 @@ ui <- fluidPage(
                                   the ODC data checks and the Data explorer"),
                            tags$br(),
 
-                           tags$p(tags$strong("ODC data checks:"), "It perform data checks to ensure minimal quality for 
-                                  data publication through the ODCs"),
-
-                      
                            tags$p(tags$strong("Data explorer:"), "It provides an interactive report of the content of your data!"),
-                           actionButton("next_begin","Begin")
+                            tags$hr(),
+                            tags$h3("To Begin:"),
+                            tags$p("Click the `Begin` button below or `Start Here` at the top of the page."),
+                            tags$p("The `Begin` button will work on local version but may not work on the hosted version."),
+                            actionButton("next_begin","Begin"),
+                            tags$hr(),
+                            tags$h4("About ODCdqa"),
+                            tags$p("ODCdqa GitHub repo: ",
+                              tags$a(href="https://github.com/panorauma/odcdqa","ODCdqa Repo")
+                            )
                         )
               ),
              
@@ -86,7 +94,10 @@ ui <- fluidPage(
                                                  accept = c("text/csv",
                                                             "text/comma-separated-values,text/plain",
                                                             ".csv")),
-                                        actionButton("next_startchecks","Next step")
+                                      tags$hr(),
+                                       tags$h4("Next: Run ODC data checks"),
+                                       tags$p("Click the `Next` button below or `ODC data checks` at the top of the page."),
+                                       actionButton("next_startchecks","Next")
                                      ),
                         ),
                         
@@ -109,10 +120,12 @@ ui <- fluidPage(
              
              tabPanel("ODC data checks",
                       sidebarLayout(
-                        sidebarPanel(tags$p("Visit the about page to get more information on the
+                        sidebarPanel(
+                          tags$h4("Run ODC data checks"),
+                                    tags$p("Visit the about page to get more information on the
                                      checks and the results"),
                                      tags$hr(),
-                                     
+                                     tags$p("Click on the `Run Checks` button below to run ODC data checks"),
                                      #tags$hr(),
                                      disabled(actionButton("checkButton", "Run checks")),
                                      tags$br(),
@@ -142,12 +155,17 @@ ui <- fluidPage(
                     tags$div(style = "width:40%; text-align: center;
                     margin-left: auto;margin-right: auto;", class = "well",
                       tags$h4("Exploratory data analysis (EDA)"),
+                      #---UNSUSPEND in hosted---#
+                      # tags$hr(),
+                      # tags$h4("Not available in this (hosted) version of ODCdqa"),
+                      # tags$hr(),
+                      #------#
                       tags$p("By clicking the button you will generate an interactive data
                                    exploration page from the uploaded dataset and data dictionary.
-                                            This process may take a while depending on the size of the dataset"),
+                                            This process may take a while depending on the size of the dataset."),
                       tags$p("A new tab should open once the interactive page is created.
                                             You can also download the html using the download button.
-                                            Once downloaded the file will be delated from the server"),
+                                            Once downloaded the file will be delated from the server."),
                       tags$p("Note: pop-up blockers may prevent the EDA page to show up"),
                       disabled(actionButton("profilingButton", "Generate EDA")),
                       disabled(downloadButton("profilingDownButton", "Download EDA (.html)"))
@@ -310,6 +328,7 @@ server <- function(input, output, session) {
     empty_data_dict(dataframes$df_data)
   })
   
+  #---SUSPEND in hosted---#
   #MARK: generate profile report
   #run profiling report
   observeEvent(input$profilingButton,{
@@ -339,7 +358,8 @@ server <- function(input, output, session) {
     },
     contentType = "text/html"
   )
-  
+  #------#
+
   #info popup when click on check name
   observeEvent(input[["selectedCell"]], {
     #create subset to use in HTML(paste())
