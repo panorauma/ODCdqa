@@ -14,23 +14,23 @@ shinyjs.browseURL = function(url){
 "
 
 #---SUSPEND in hosted---#
-# library(reticulate)
+library(reticulate)
 
-# #import other file dependencies (workaround for file not found)
-# source("https://raw.githubusercontent.com/panorauma/ODCdqa/main/src/functions.R")
-# definition_check <- read.csv("https://raw.githubusercontent.com/panorauma/ODCdqa/main/src/checks%20definitions.csv")
+#import other file dependencies (workaround for file not found)
+source("https://raw.githubusercontent.com/panorauma/ODCdqa/main/src/functions.R")
+definition_check <- read.csv("https://raw.githubusercontent.com/panorauma/ODCdqa/main/src/checks%20definitions.csv")
 
-# #create temp path (will be rm when shiny closes) + recreated if no longer exists
-# temp_dir <- tempdir(check=TRUE)
-# temp_file <- file.path(temp_dir,"about.html")
-# download.file("https://raw.githubusercontent.com/panorauma/ODCdqa/main/src/about.html",temp_file)
+#create temp path (will be rm when shiny closes) + recreated if no longer exists
+temp_dir <- tempdir(check=TRUE)
+temp_file <- file.path(temp_dir,"about.html")
+download.file("https://raw.githubusercontent.com/panorauma/ODCdqa/main/src/about.html",temp_file)
 
-# #MARK: setup reticulate
-# reticulate::py_install("pandas")
-# reticulate::py_install("ydata_profiling")
+#MARK: setup reticulate
+reticulate::py_install("pandas")
+reticulate::py_install("ydata_profiling")
 
-# pd <- reticulate:: import("pandas")
-# pr <- reticulate:: import("ydata_profiling")
+pd <- reticulate:: import("pandas")
+pr <- reticulate:: import("ydata_profiling")
 #------#
 
 #MARK: UI
@@ -156,10 +156,15 @@ ui <- fluidPage(
                     margin-left: auto;margin-right: auto;", class = "well",
                       tags$h4("Exploratory data analysis (EDA)"),
                       #---UNSUSPEND in hosted---#
-                      tags$hr(),
-                      tags$h4("Not available in this (hosted) version of ODCdqa"),
-                      tags$hr(),
+                      # tags$hr(),
+                      # tags$h4("Not available in this (hosted) version of ODCdqa."),
+                      # tags$p("Please visit ",
+                      #   tags$a(href="https://github.com/panorauma/odcdqa","ODCdqa Repo"),
+                      #   "for further information on how to install or host the ODCdqa with all functionalities.")
+                      # tags$hr(),
                       #------#
+                      
+                      #---SUSPEND in hosted---#
                       tags$p("By clicking the button you will generate an interactive data
                                    exploration page from the uploaded dataset and data dictionary.
                                             This process may take a while depending on the size of the dataset."),
@@ -167,6 +172,7 @@ ui <- fluidPage(
                                             You can also download the html using the download button.
                                             Once downloaded the file will be delated from the server."),
                       tags$p("Note: pop-up blockers may prevent the EDA page to show up"),
+                      #------#
                       disabled(actionButton("profilingButton", "Generate EDA")),
                       disabled(downloadButton("profilingDownButton", "Download EDA (.html)"))
                     )
@@ -329,35 +335,35 @@ server <- function(input, output, session) {
   })
   
   #---SUSPEND in hosted---#
-  # #MARK: generate profile report
-  # #run profiling report
-  # observeEvent(input$profilingButton,{
+  #MARK: generate profile report
+  #run profiling report
+  observeEvent(input$profilingButton,{
     
-  #   showNotification("The report is in process. This may take a few seconds or minutes",
-  #                    closeButton =TRUE)
+    showNotification("The report is in process. This may take a few seconds or minutes",
+                     closeButton =TRUE)
     
-  #   w$show()
+    w$show()
     
-  #   py_df <- reticulate::r_to_py(dataframes$df_data)
-  #   # pd_dict <- reticulate::r_to_py(dataframes$df_dic) #not req in minimal mode
+    py_df <- reticulate::r_to_py(dataframes$df_data)
+    # pd_dict <- reticulate::r_to_py(dataframes$df_dic) #not req in minimal mode
 
-  #   profile <- pr$ProfileReport(py_df,title="Profile Report",minimal=TRUE)
-  #   profile$to_file(paste0(temp_dir,"/ProfileReport.html"))
+    profile <- pr$ProfileReport(py_df,title="Profile Report",minimal=TRUE)
+    profile$to_file(paste0(temp_dir,"/ProfileReport.html"))
     
-  #   #enable download button
-  #   enable("profilingDownButton")
-  #   w$hide()
-  # })
+    #enable download button
+    enable("profilingDownButton")
+    w$hide()
+  })
   
-  # #MARK: download profile report
-  # #action for downloading EDA profiling
-  # output$profilingDownButton <- downloadHandler(
-  #   filename = "ProfileReport.html",
-  #   content = function(file) {
-  #     file.copy(paste0(temp_dir,"/ProfileReport.html"),file)
-  #   },
-  #   contentType = "text/html"
-  # )
+  #MARK: download profile report
+  #action for downloading EDA profiling
+  output$profilingDownButton <- downloadHandler(
+    filename = "ProfileReport.html",
+    content = function(file) {
+      file.copy(paste0(temp_dir,"/ProfileReport.html"),file)
+    },
+    contentType = "text/html"
+  )
   #------#
 
   #info popup when click on check name
