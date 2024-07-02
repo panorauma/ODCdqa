@@ -42,7 +42,7 @@ ui <- fluidPage(
                                         word-wrap: break-word;overflow-x:visible;
                                         font-family: monospace;}"),
   
-  navbarPage("Open Data Commons (ODC) data quality app (v0.2.2, beta)",
+  navbarPage("Open Data Commons (ODC) data quality app (v0.2.3, beta)",
              tabPanel("Home",
                       tags$div(style = "width:40%; text-align: center;margin-left: auto;margin-right: auto;", 
                       class = "well",
@@ -157,9 +157,14 @@ ui <- fluidPage(
                       tags$h4("Exploratory data analysis (EDA)"),
                       #---UNSUSPEND in hosted---#
                       # tags$hr(),
-                      # tags$h4("Not available in this (hosted) version of ODCdqa"),
+                      # tags$h4("Not available in this (hosted) version of ODCdqa."),
+                      # tags$p("Please visit ",
+                      #   tags$a(href="https://github.com/panorauma/odcdqa","ODCdqa Repo"),
+                      #   "for further information on how to install or host the ODCdqa with all functionalities."),
                       # tags$hr(),
                       #------#
+                      
+                      #---SUSPEND in hosted---#
                       tags$p("By clicking the button you will generate an interactive data
                                    exploration page from the uploaded dataset and data dictionary.
                                             This process may take a while depending on the size of the dataset."),
@@ -167,6 +172,7 @@ ui <- fluidPage(
                                             You can also download the html using the download button.
                                             Once downloaded the file will be delated from the server."),
                       tags$p("Note: pop-up blockers may prevent the EDA page to show up"),
+                      #------#
                       disabled(actionButton("profilingButton", "Generate EDA")),
                       disabled(downloadButton("profilingDownButton", "Download EDA (.html)"))
                     )
@@ -332,23 +338,23 @@ server <- function(input, output, session) {
   #MARK: generate profile report
   #run profiling report
   observeEvent(input$profilingButton,{
-    
+
     showNotification("The report is in process. This may take a few seconds or minutes",
                      closeButton =TRUE)
-    
+
     w$show()
-    
+
     py_df <- reticulate::r_to_py(dataframes$df_data)
     # pd_dict <- reticulate::r_to_py(dataframes$df_dic) #not req in minimal mode
 
     profile <- pr$ProfileReport(py_df,title="Profile Report",minimal=TRUE)
     profile$to_file(paste0(temp_dir,"/ProfileReport.html"))
-    
+
     #enable download button
     enable("profilingDownButton")
     w$hide()
   })
-  
+
   #MARK: download profile report
   #action for downloading EDA profiling
   output$profilingDownButton <- downloadHandler(
