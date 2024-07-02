@@ -157,9 +157,14 @@ ui <- fluidPage(
                       tags$h4("Exploratory data analysis (EDA)"),
                       #---UNSUSPEND in hosted---#
                       # tags$hr(),
-                      # tags$h4("Not available in this (hosted) version of ODCdqa"),
+                      # tags$h4("Not available in this (hosted) version of ODCdqa."),
+                      # tags$p("Please visit ",
+                      #   tags$a(href="https://github.com/panorauma/odcdqa","ODCdqa Repo"),
+                      #   "for further information on how to install or host the ODCdqa with all functionalities.")
                       # tags$hr(),
                       #------#
+                      
+                      #---SUSPEND in hosted---#
                       tags$p("By clicking the button you will generate an interactive data
                                    exploration page from the uploaded dataset and data dictionary.
                                             This process may take a while depending on the size of the dataset."),
@@ -167,6 +172,7 @@ ui <- fluidPage(
                                             You can also download the html using the download button.
                                             Once downloaded the file will be delated from the server."),
                       tags$p("Note: pop-up blockers may prevent the EDA page to show up"),
+                      #------#
                       disabled(actionButton("profilingButton", "Generate EDA")),
                       disabled(downloadButton("profilingDownButton", "Download EDA (.html)"))
                     )
