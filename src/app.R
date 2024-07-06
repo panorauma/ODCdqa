@@ -29,8 +29,8 @@ download.file("https://raw.githubusercontent.com/panorauma/ODCdqa/main/src/about
 reticulate::py_install("pandas")
 reticulate::py_install("ydata_profiling")
 
-pd <- reticulate:: import("pandas")
-pr <- reticulate:: import("ydata_profiling")
+pd <- reticulate::import("pandas")
+pr <- reticulate::import("ydata_profiling")
 #------#
 
 #MARK: UI
