@@ -42,7 +42,7 @@ ui <- fluidPage(
                                         word-wrap: break-word;overflow-x:visible;
                                         font-family: monospace;}"),
   
-  navbarPage("Open Data Commons (ODC) data quality app (v0.2.3, beta)",
+  navbarPage("Open Data Commons (ODC) data quality app (v0.2.4, beta)",id = "navbarpage",
              tabPanel("Home",
                       tags$div(style = "width:40%; text-align: center;margin-left: auto;margin-right: auto;", 
                       class = "well",
@@ -69,7 +69,7 @@ ui <- fluidPage(
                         )
               ),
              
-             tabPanel("Start Here",
+             tabPanel("Start Here",value = "start_here",
                       sidebarLayout(
                         sidebarPanel(width = 3,
                                      tags$h3("Instructions"),
@@ -118,7 +118,7 @@ ui <- fluidPage(
                 
              )),
              
-             tabPanel("ODC data checks",
+             tabPanel("ODC data checks",value = "data_checks",
                       sidebarLayout(
                         sidebarPanel(
                           tags$h4("Run ODC data checks"),
@@ -173,8 +173,8 @@ ui <- fluidPage(
                       #                       Once downloaded the file will be delated from the server."),
                       # tags$p("Note: pop-up blockers may prevent the EDA page to show up"),
                       #------#
-                      disabled(actionButton("profilingButton", "Generate EDA")),
-                      disabled(downloadButton("profilingDownButton", "Download EDA (.html)"))
+                      #disabled(actionButton("profilingButton", "Generate EDA")),
+                      #disabled(downloadButton("profilingDownButton", "Download EDA (.html)"))
                     )
              ),
              tabPanel("About the ODC and this app",htmlOutput("about"))
@@ -184,6 +184,11 @@ ui <- fluidPage(
 #MARK: server
 # Define server logic to read selected file ----
 server <- function(input, output, session) {
+  definition_check <<- read.csv("checks definitions.csv")
+  odc_tbi_data_dic <<- read.csv("precise-odc_tbi_dict_format.csv")
+  odc_min_vars<<-read.csv("https://raw.githubusercontent.com/panorauma/ODC_min_vars/refs/heads/main/odc_min_vars.csv")
+  source("functions.R")
+  
   dataframes <- reactiveValues()
   
   w = Waiter$new(
@@ -201,7 +206,7 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "dataset_tab",
                       selected = "dataset")
     
-    dataframes$df_data <- read_csv(input$data$datapath)
+    dataframes$df_data <- read_csv(input$data$datapath, name_repair = "minimal")
     
     # names(dataframes$df_data) <- names(dataframes$df_data) %>%
     #   str_replace("[^A-z0-9._]","_")
@@ -275,16 +280,17 @@ server <- function(input, output, session) {
       dataframes$valid<-validate_odc(dataset=dataframes$df_data,
                                      datadic=dataframes$df_dic,
                                      str_checks = "all",
-                                     sch_checks = "all")
+                                     sch_checks = "all",
+                                     community = "sci")
     }else{ #odc tbi
       
-      #'"a" is placeholder, modify str_checks & sch_checks in functions.R
       dataframes$valid<-validate_odc(dataset=dataframes$df_data,
                                      datadic=dataframes$df_dic,
-                                     str_checks = "a",
-                                     sch_checks = "a")
+                                     str_checks = "all",
+                                     sch_checks = "all",
+                                     community = "tbi")
       
-      temp <- dataframes$valid$structure
+      #temp <- dataframes$valid$structure
     }
     
     updateTabsetPanel(session, "dataset_tab",
@@ -391,12 +397,12 @@ server <- function(input, output, session) {
 
   ## Next page: Begin
   observeEvent(input$next_begin, {
-    updateNavbarPage(session, "navbarpage", selected = "Start Here")
+    updateTabsetPanel(session, "navbarpage",selected = "start_here")
   })
   
   ## Next page: ODC data checks
   observeEvent(input$next_startchecks, {
-    updateNavbarPage(session, "navbarpage", selected = "ODC data checks")
+    updateTabsetPanel(session, "navbarpage", selected = "data_checks")
   })
 }
 

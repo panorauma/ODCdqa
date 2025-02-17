@@ -7,7 +7,7 @@
 #' @return Dataframe of all check_list information
 #' @export
 checklist_to_df <- function(check_list){ #MARK: checklist_to_df  
-
+  
   #create empty df
   table_report <- data.frame(CheckName=names(check_list),
                              Num_blank=NA,
@@ -447,35 +447,36 @@ system.file <- function(...,package="base",lib.loc=NULL,mustWork=FALSE){ #MARK: 
 #' @export 
 validate_odc <- function(dataset=NULL,datadic=NULL,
                        dataset_path=NULL,datadic_path=NULL,str_checks,
-                       sch_checks){ #MARK: validate_odc
-
-  minimal_var <- c("Subject_ID", "Species", "Strain", "Animal_origin", "Age", "Weight", "Sex",
-                   'Group', 'Laboratory', 'StudyLeader', 'Published', "Exclusion_in_origin_study",
-                   'Exclusion_reason', 'Cause_of_Death', 'Injury_type', 'Injury_device','Injury_level',
-                   'Injury_details')
+                       sch_checks, community){ #MARK: validate_odc
 
   results<-list()
 
   if(is.null(datadic_path)&is.null(datadic)){
     if(!is.null(dataset_path)){
       results[['structure']]<-validate_structure(dataset_path=dataset_path,
-                                                 str_checks = str_checks)
+                                                 str_checks = str_checks,
+                                                 community)
     }else{
       results[['structure']]<-validate_structure(dataset=dataset,
-                                                 str_checks = str_checks)
+                                                 str_checks = str_checks,
+                                                 community)
     }
   }else{
     if(!is.null(dataset_path)&!is.null(datadic_path)){
       results[['structure']]<-validate_structure(dataset_path=dataset_path,
-                                                 str_checks = str_checks)
+                                                 str_checks = str_checks,
+                                                 community)
       results[['schema']]<-validate_schema(dataset_path=dataset_path,
                                            datadic_path=datadic_path,
-                                           sch_checks = sch_checks)
+                                           sch_checks = sch_checks,
+                                           community)
     }else{
       results[['structure']]<-validate_structure(dataset=dataset,
-                                                 str_checks = str_checks)
+                                                 str_checks = str_checks,
+                                                 community)
       results[['schema']]<-validate_schema(dataset=dataset,datadic=datadic,
-                                           sch_checks = sch_checks)
+                                           sch_checks = sch_checks,
+                                           community)
     }
 
   }
@@ -485,25 +486,17 @@ validate_odc <- function(dataset=NULL,datadic=NULL,
 }
 
 #schema check
-validate_schema <- function(dataset,datadic,sch_checks="all"){
+validate_schema <- function(dataset,datadic,sch_checks="all", community){
 
+  community<-"tbi"
   # Performs the schema check given the dataset_path and the data_dic_path
-
-  minimal_var <- c("Subject_ID", "Species", "Strain", "Animal_origin", "Age", "Weight", "Sex",
-                   'Group', 'Laboratory', 'StudyLeader', 'Published', "Exclusion_in_origin_study",
-                   'Exclusion_reason', 'Cause_of_Death', 'Injury_type', 'Injury_device','Injury_level',
-                   'Injury_details')
+  minimal_var <- minimal_vars(community)
 
   #'sci = all, tbi = else (only difference is tbi doesn't use "min_vars")
   #'min_vars = minimal_var = vars that must be present in dataset/data dic
   if(sch_checks == "all"){
     sch_checks <- c("dic_header", "data_extra_header","data_miss_header",
                     "miss_description","miss_title","min_vars",
-                    "other_symbols","pos1_char","over_60char")
-  }else{
-    #tbi does not have "min_vars"
-    sch_checks <- c("dic_header", "data_extra_header","data_miss_header",
-                    "miss_description","miss_title",
                     "other_symbols","pos1_char","over_60char")
   }
 
@@ -515,14 +508,24 @@ validate_schema <- function(dataset,datadic,sch_checks="all"){
 
   #data dic headers
   datadic_headers<-colnames(datadic)
-  datadic_headers_stand<-c('VariableName','Title',	'Unit_of_Measure',	'Description',
-                           'Comments',	'PermittedValues',	'DataType',	'MaximumValue',
-                           'MinimumValue')
+  datadic_headers_stand<-dict_format(community)
 
   #rm NA values to avoid errors
   dataset_header<-na.omit(colnames(dataset))
   datadic_vars<-na.omit(datadic$VariableName)
-
+  
+  #transform for synonyms
+  if (class(datadic_headers_stand) == "list"){
+    for (v in names(datadic_headers_stand)){
+      for (h in 1:length(datadic_headers)){
+        if(datadic_headers[h]%in%datadic_headers_stand[[v]]){
+          datadic_headers[h]<-v
+        }
+      }
+    }
+    datadic_headers_stand<-names(datadic_headers_stand)
+  }
+  
   #Check whether there is a missing header or misspelled header in the data dictionary
   if("dic_header"%in%checks){
     results[['data_dic_headers']]<-list('n_datadic_Noheaders'=
@@ -668,22 +671,16 @@ validate_schema <- function(dataset,datadic,sch_checks="all"){
 }
 
 #struct check
-validate_structure <- function(dataset,str_checks="all"){ #MARK: validate_structure
+validate_structure <- function(dataset,str_checks="all", community){ #MARK: validate_structure
 
   #Performs the structural check given the dataset_path
 
-  minimal_var <- c("Subject_ID", "Species", "Strain", "Animal_origin", "Age", "Weight", "Sex",
-                   'Group', 'Laboratory', 'StudyLeader', 'Published', "Exclusion_in_origin_study",
-                   'Exclusion_reason', 'Cause_of_Death', 'Injury_type', 'Injury_device','Injury_level',
-                   'Injury_details')
+  minimal_var <- minimal_vars(community)
   
   #'same as schema checks
   if(str_checks == "all"){
     str_checks <- c("blank_header", "dup_header","blank_row", "blank_column",
                     "dup_row", "dup_column", "min_vars")
-  }else{
-    str_checks <- c("blank_header", "dup_header","blank_row", "blank_column",
-                    "dup_row", "dup_column")
   }
 
   checks<-match.arg(str_checks, c("blank_header", "dup_header","blank_row", "blank_column",
@@ -786,4 +783,48 @@ var_other_symbols <- function(string){
   })
   
   return(temp)
+}
+
+#' minimal_vars
+#'
+#' Return the minimal variables needed given what has been decided by the community
+#'
+#'@param community : String. "sci" or "tbi".
+#'
+#' @return String of the name of the minimal variables
+#' @export
+#' 
+minimal_vars<-function(community){
+  if(community =="sci"){
+    min_vars<-odc_min_vars$Variable[odc_min_vars$Community=="odc-sci"]
+  }else{
+    min_vars<-odc_min_vars$Variable[odc_min_vars$Community=="odc-tbi"]
+  }
+  
+  return(min_vars)
+}
+
+#' dict_format
+#'
+#' Return the allowable headers required in the data dictionary needed given what has been decided by the community
+#'
+#'@param community : String. "sci" or "tbi".
+#'
+#' @return String of the name of the dictionary headers
+#' @export
+#' 
+dict_format<-function(community){
+  
+  if (community == "sci"){
+    data_dict_vars<-c('VariableName','Title',	'Unit_of_Measure',	'Description',
+      'Comments',	'PermittedValues',	'DataType',	'MaximumValue',
+      'MinimumValue')
+  }else{
+    temp<-odc_tbi_data_dic[odc_tbi_data_dic$id_required =="Required",]
+    syn<-strsplit(temp$synonim, split = ";")
+    names(syn)<-temp$header
+    data_dict_vars<-syn
+  }
+  
+  return(data_dict_vars)
 }

@@ -1,0 +1,12 @@
+name: Data-quality-app
+title: Data-quality-app
+username: atpspin
+account: atpspin
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 8919527
+bundleId: 9813584
+url: https://atpspin.shinyapps.io/Data-quality-app/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
