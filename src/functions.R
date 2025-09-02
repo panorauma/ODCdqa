@@ -488,7 +488,6 @@ validate_odc <- function(dataset=NULL,datadic=NULL,
 #schema check
 validate_schema <- function(dataset,datadic,sch_checks="all", community){
 
-  community<-"tbi"
   # Performs the schema check given the dataset_path and the data_dic_path
   minimal_var <- minimal_vars(community)
 
