@@ -55,10 +55,6 @@ This checks are not performed automatically by this tool yet
 * **Required-constraint:** A required field for the dataset contains no values or is not assigned on the dataset. Currently the only required value in the datasets is the subject identifier. As ODC-SCI develops additional data standards, it is possible that more variables will be required on all datasets.
 * **Value-constraint:** The values of a variable should be equal to one of the permitted values enumerated in the data dictionary, or within the limits of the permitted values.
 
-## Exploratory Data Report
-
-The exploratory data report is generated with Python [ydata-profiling](https://ydata-profiling.ydata.ai/) library.
-
 ## License
 
 MIT License

@@ -1,4 +1,4 @@
-#script to install all required packages for package version of ODC Utilities
+# script to install all required packages for package version of ODC Utilities
 
 to_install <- c(
     # "tidyverse",
@@ -6,7 +6,7 @@ to_install <- c(
     "shinyjs",
     "DT",
     "waiter",
-    "reticulate"
+    # "reticulate"
 )
 
 install.packages(to_install)
