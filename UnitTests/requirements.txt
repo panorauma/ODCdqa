@@ -1,5 +1,0 @@
-# pandas == 1.5.3
-ydata_profiling
-jupyterlab
-notebook
-ipywidgets
