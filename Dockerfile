@@ -1,7 +1,7 @@
 FROM rocker/shiny-verse:4.5.1
 
 #install req packages (tidyverse & shiny are included in base img)
-COPY ./setup/requirements.R ./setup/requirements.R
+COPY ./setup ./setup
 RUN Rscript ./setup/requirements.R
 
 #copy source files, set working dir, expose port 3838 (shifted lower to take advantage of cache)
