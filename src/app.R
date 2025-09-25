@@ -31,31 +31,28 @@ ui <- fluidPage(
                                         word-wrap: break-word;overflow-x:visible;
                                         font-family: monospace;}"),
   navbarPage(
-    "Open Data Commons (ODC) data quality app (v0.3.0, beta)",
+    "Open Data Commons (ODC) QC Tool (v0.3.0)",
     tabPanel(
       "Home",
       tags$div(
         style = "width:40%; text-align: center;margin-left: auto;margin-right: auto;",
         class = "well",
         tags$h3("Welcome"),
-        tags$p("This app is in beta, meaning we are still working on it!
+        tags$p("This app is in beta (pre v1.0 release), meaning we are still working on it!
                                     You can use it and it should work fine for most of the cases.
                                   But if you find a bug or have feedback, let us know at info@odc-sci.org or info@odc-tbi.org"),
         tags$hr(),
-        tags$p("There are two main functionalities in this app,
-                                  the ODC data checks and the Data explorer"),
-        tags$br(),
-        tags$p(tags$strong("Data explorer:"), "It provides an interactive report of the content of your data!"),
+        tags$p("ODC data checks"),
         tags$hr(),
         tags$h3("To Begin:"),
         tags$p("Click the `Begin` button below or `Start Here` at the top of the page."),
         tags$p("The `Begin` button will work on local version but may not work on the hosted version."),
         actionButton("next_begin", "Begin"),
         tags$hr(),
-        tags$h4("About ODCdqa"),
+        tags$h4("About ODC QC Tool"),
         tags$p(
           "ODCdqa GitHub repo: ",
-          tags$a(href = "https://github.com/panorauma/odcdqa", "ODCdqa Repo")
+          tags$a(href = "https://github.com/panorauma/odcdqa", "ODC QC Tool Repo")
         )
       )
     ),

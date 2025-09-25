@@ -1,2 +1,0 @@
-# pandas #let ydata_profiling decide latest compatible version
-ydata_profiling == 4.7.0
