@@ -31,7 +31,7 @@ ui <- fluidPage(
                                         word-wrap: break-word;overflow-x:visible;
                                         font-family: monospace;}"),
   navbarPage(
-    "Open Data Commons (ODC) QC Tool (v0.3.0)",
+    "Open Data Commons (ODC) QC Tool (v0.3.1)",
     tabPanel(
       "Home",
       tags$div(
@@ -306,7 +306,7 @@ server <- function(input, output, session) {
     #' 5.nchar(suggested name)
     #' 6.rename cols
     suggested_varname <- data.frame(orig_name = unlist(
-      dataframes[["valid"]][["schema"]][["over_60char"]][["which_over_60char_headers"]]
+      dataframes[["valid"]][["schema"]][["over_64char"]][["which_over_64char_headers"]]
     )) %>%
       dplyr::distinct() %>%
       dplyr::mutate(orig_nchar = nchar(orig_name)) %>%
