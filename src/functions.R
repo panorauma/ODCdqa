@@ -157,7 +157,7 @@ render_check_table <- function(structure_checks, schema_checks) { # MARK: render
     "Data dictionary header", "Data extra header", "Data missing header",
     "Missing description", "Missing title", "Required variables (dictionary)",
     "Invalid special characters (variable name)", "Starts with a letter (variable name)",
-    "More than 60 characters (variable name)"
+    "Doesn't exceed 64 characters (variable name)"
   )
   temp_schema$type <- "Schema"
 
