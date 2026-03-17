@@ -99,7 +99,7 @@ empty_data_dict <- function(upload_dataset) { # MARK: empty_data_dict
   # use PermittedValues to get min & max
   autoDataDic <- separate(autoDataDic, PermittedValues, c("MinimumValue", "MaximumValue"),
     sep = ", ", remove = FALSE
-  ) %>%
+  ) |>
     relocate("Comments", .after = "MaximumValue")
 
   # use side effect of as.numeric to force characters to NA
@@ -163,7 +163,7 @@ render_check_table <- function(structure_checks, schema_checks) { # MARK: render
 
   table_report <- rbind(temp_structure, temp_schema)
 
-  table_report <- table_report %>%
+  table_report <- table_report |>
     relocate(type, .before = CheckName)
 
   # table_report$CheckName <- c("Blank Header","")
@@ -184,7 +184,7 @@ render_check_table <- function(structure_checks, schema_checks) { # MARK: render
     ),
     editable = FALSE,
     callback = JS("return table")
-  ) %>%
+  ) |>
     formatStyle("Status",
       target = "row",
       backgroundColor = styleEqual(
@@ -710,13 +710,13 @@ validate_schema <- function(dataset, datadic, sch_checks = "all") {
 
     #' wrangle other_symbols_df
     #' Value = TRUE when other symbols detected in var name
-    other_symbols_df <- other_symbols_df %>%
+    other_symbols_df <- other_symbols_df |>
       dplyr::mutate(
         Value = dplyr::case_when(
           Value == TRUE ~ "Fail",
           Value == FALSE ~ "Pass"
         )
-      ) %>%
+      ) |>
       dplyr::filter(Value == "Fail")
 
     # store results in nested lists
@@ -734,7 +734,7 @@ validate_schema <- function(dataset, datadic, sch_checks = "all") {
     pos1_check_df <- data.frame(Key = datadic_vars, Value = unlist(pos1_check))
 
     # keep datadic_vars that failed check
-    pos1_check_df <- pos1_check_df %>%
+    pos1_check_df <- pos1_check_df |>
       dplyr::filter(Value == "Fail")
 
     # store results in nested lists
@@ -754,7 +754,7 @@ validate_schema <- function(dataset, datadic, sch_checks = "all") {
     char_length_df <- data.frame(Key = datadic_vars, Value = unlist(char_length_check))
 
     # keep datadic_vars that failed check
-    char_length_df <- char_length_df %>%
+    char_length_df <- char_length_df |>
       dplyr::filter(Value == "Fail")
 
     # store results in nested lists
@@ -891,8 +891,8 @@ validate_structure <- function(dataset, str_checks = "all") { # MARK: validate_s
 first_char_letter <- function(string) { # MARK: first_char_letter
 
   # find position of 1st letter in string
-  temp <- string %>%
-    str_replace("[_.]", "1") %>% # str_replace used to ensure "_" & "." will be excluded
+  temp <- string |>
+    str_replace("[_.]", "1") |> # str_replace used to ensure "_" & "." will be excluded
     str_locate("[A-z]")
 
   # Pass/Fail

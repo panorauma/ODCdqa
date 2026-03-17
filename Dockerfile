@@ -1,4 +1,4 @@
-FROM rocker/shiny-verse:4.5.1
+FROM rocker/shiny-verse:4.5.3
 
 #install req packages (tidyverse & shiny are included in base img)
 COPY ./setup ./setup

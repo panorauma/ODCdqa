@@ -22,7 +22,6 @@ temp_dir <- tempdir(check = TRUE)
 temp_file <- file.path(temp_dir, "about.html")
 download.file("https://raw.githubusercontent.com/panorauma/ODCdqa/main/src/about.html", temp_file)
 
-# MARK: UI
 ui <- fluidPage(
   useShinyjs(),
   extendShinyjs(text = js_code, functions = "browseURL"),
@@ -31,7 +30,7 @@ ui <- fluidPage(
                                         word-wrap: break-word;overflow-x:visible;
                                         font-family: monospace;}"),
   navbarPage(
-    "Open Data Commons (ODC) QC Tool (v0.3.1)",
+    "Open Data Commons (ODC) QC Tool (v0.3.2)",
     tabPanel(
       "Home",
       tags$div(
@@ -167,7 +166,6 @@ ui <- fluidPage(
   )
 )
 
-# MARK: server
 # Define server logic to read selected file ----
 server <- function(input, output, session) {
   dataframes <- reactiveValues()
@@ -190,7 +188,7 @@ server <- function(input, output, session) {
 
     dataframes$df_data <- read_csv(input$data$datapath)
 
-    # names(dataframes$df_data) <- names(dataframes$df_data) %>%
+    # names(dataframes$df_data) <- names(dataframes$df_data) |>
     #   str_replace("[^A-z0-9._]","_")
   })
 
@@ -307,14 +305,14 @@ server <- function(input, output, session) {
     #' 6.rename cols
     suggested_varname <- data.frame(orig_name = unlist(
       dataframes[["valid"]][["schema"]][["over_64char"]][["which_over_64char_headers"]]
-    )) %>%
-      dplyr::distinct() %>%
-      dplyr::mutate(orig_nchar = nchar(orig_name)) %>%
-      dplyr::mutate(new_name = orig_name %>%
-        str_replace_all("[^A-z0-9_.]", "_") %>%
-        str_replace_all("[\\^`]", "") %>%
-        str_replace_all("[\\[\\]]", "") %>%
-        str_replace_all("_{2}", "")) %>%
+    )) |>
+      dplyr::distinct() |>
+      dplyr::mutate(orig_nchar = nchar(orig_name)) |>
+      dplyr::mutate(new_name = orig_name |>
+        str_replace_all("[^A-z0-9_.]", "_") |>
+        str_replace_all("[\\^`]", "") |>
+        str_replace_all("[\\[\\]]", "") |>
+        str_replace_all("_{2}", "")) |>
       dplyr::mutate(new_nchar = nchar(new_name))
 
     names(suggested_varname) <- c(
@@ -365,6 +363,5 @@ server <- function(input, output, session) {
   })
 }
 
-# MARK: Run app
 # Run the application
 shinyApp(ui = ui, server = server)
