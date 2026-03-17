@@ -522,16 +522,9 @@ validate_odc <- function(dataset = NULL, datadic = NULL,
                          dataset_path = NULL, datadic_path = NULL, str_checks,
                          sch_checks) { # MARK: validate_odc
 
-  minimal_var <- c(
-    "Subject_ID", "Species", "Strain", "Animal_origin", "Age", "Weight", "Sex",
-    "Group", "Laboratory", "StudyLeader", "Published", "Exclusion_in_origin_study",
-    "Exclusion_reason", "Cause_of_Death", "Injury_type", "Injury_device", "Injury_level",
-    "Injury_details"
-  )
-
   results <- list()
 
-  if (is.null(datadic_path) & is.null(datadic)) {
+  if (is.null(datadic_path) && is.null(datadic)) {
     if (!is.null(dataset_path)) {
       results[["structure"]] <- validate_structure(
         dataset_path = dataset_path,
@@ -544,7 +537,7 @@ validate_odc <- function(dataset = NULL, datadic = NULL,
       )
     }
   } else {
-    if (!is.null(dataset_path) & !is.null(datadic_path)) {
+    if (!is.null(dataset_path) && !is.null(datadic_path)) {
       results[["structure"]] <- validate_structure(
         dataset_path = dataset_path,
         str_checks = str_checks
@@ -574,11 +567,17 @@ validate_odc <- function(dataset = NULL, datadic = NULL,
 validate_schema <- function(dataset, datadic, sch_checks = "all") {
   # Performs the schema check given the dataset_path and the data_dic_path
 
+  # generate from min_req_vars.R
+  # https://github.com/panorauma/ODC_min_vars/blob/main/odc_min_vars.csv
   minimal_var <- c(
-    "Subject_ID", "Species", "Strain", "Animal_origin", "Age", "Weight", "Sex",
-    "Group", "Laboratory", "StudyLeader", "Published", "Exclusion_in_origin_study",
-    "Exclusion_reason", "Cause_of_Death", "Injury_type", "Injury_device", "Injury_level",
-    "Injury_details"
+    "SubjectID", "SpeciesTyp", "SpeciesStrainTyp",
+    "AnimalSourceNam", "AgeVal", "BodyWgtMeasrVal",
+    "SexTyp", "InjGroupAssignTyp", "Laboratory",
+    "StudyLeader", "Exclusion_in_origin_study", "Exclusion_reason",
+    "Cause_of_Death", "Injury_type", "Injury_device", "Injury_level",
+    "Injury_details", "SubjectID", "SpeciesTyp", "SpeciesStrainTyp",
+    "AgeVal", "BodyWgtMeasrVal", "SexTyp", "InjGroupAssignTyp",
+    "TBIModelTyp", "InjElapsedTime"
   )
 
   #' sci = all, tbi = else (only difference is tbi doesn't use "min_vars")
@@ -602,7 +601,7 @@ validate_schema <- function(dataset, datadic, sch_checks = "all") {
     "dic_header", "data_extra_header", "data_miss_header",
     "miss_description", "miss_title", "min_vars",
     "other_symbols", "pos1_char", "over_64char"
-  ), several.ok = T)
+  ), several.ok = TRUE)
 
   results <- list()
 
@@ -775,10 +774,14 @@ validate_structure <- function(dataset, str_checks = "all") { # MARK: validate_s
   # Performs the structural check given the dataset_path
 
   minimal_var <- c(
-    "Subject_ID", "Species", "Strain", "Animal_origin", "Age", "Weight", "Sex",
-    "Group", "Laboratory", "StudyLeader", "Published", "Exclusion_in_origin_study",
-    "Exclusion_reason", "Cause_of_Death", "Injury_type", "Injury_device", "Injury_level",
-    "Injury_details"
+    "SubjectID", "SpeciesTyp", "SpeciesStrainTyp",
+    "AnimalSourceNam", "AgeVal", "BodyWgtMeasrVal",
+    "SexTyp", "InjGroupAssignTyp", "Laboratory",
+    "StudyLeader", "Exclusion_in_origin_study", "Exclusion_reason",
+    "Cause_of_Death", "Injury_type", "Injury_device", "Injury_level",
+    "Injury_details", "SubjectID", "SpeciesTyp", "SpeciesStrainTyp",
+    "AgeVal", "BodyWgtMeasrVal", "SexTyp", "InjGroupAssignTyp",
+    "TBIModelTyp", "InjElapsedTime"
   )
 
   #' same as schema checks
@@ -797,7 +800,7 @@ validate_structure <- function(dataset, str_checks = "all") { # MARK: validate_s
   checks <- match.arg(str_checks, c(
     "blank_header", "dup_header", "blank_row", "blank_column",
     "dup_row", "dup_column", "min_vars"
-  ), several.ok = T)
+  ), several.ok = TRUE)
 
   results <- list()
 
@@ -822,7 +825,7 @@ validate_structure <- function(dataset, str_checks = "all") { # MARK: validate_s
   # blank row
   if ("blank_row" %in% checks) {
     blank_row <- apply(dataset, 1, function(x) {
-      sum(x == "" | is.na(x) | x == "na", na.rm = T) / length(x)
+      sum(x == "" | is.na(x) | x == "na", na.rm = TRUE) / length(x)
     })
     results[["blank_row"]] <- list(
       "n_blank_row" = sum(blank_row == 1),
@@ -833,7 +836,7 @@ validate_structure <- function(dataset, str_checks = "all") { # MARK: validate_s
   # blank column
   if ("blank_column" %in% checks) {
     blank_column <- apply(dataset, 2, function(x) {
-      sum(x == "" | is.na(x) | x == "na", na.rm = T) / length(x)
+      sum(x == "" | is.na(x) | x == "na", na.rm = TRUE) / length(x)
     })
     results[["blank_column"]] <- list(
       "n_blank_column" = sum(blank_column == 1),
@@ -843,12 +846,12 @@ validate_structure <- function(dataset, str_checks = "all") { # MARK: validate_s
 
   # duplicated row
   if ("dup_row" %in% checks) {
-    row_distance <- duplicated(dataset) | duplicated(dataset, fromLast = T)
+    row_distance <- duplicated(dataset) | duplicated(dataset, fromLast = TRUE)
 
     results[["duplicated_row"]] <- list(
-      "n_dupli_row" = sum(row_distance, na.rm = T),
-      "which_dupli_row" = which(row_distance == T,
-        arr.ind = T
+      "n_dupli_row" = sum(row_distance, na.rm = TRUE),
+      "which_dupli_row" = which(row_distance == TRUE,
+        arr.ind = TRUE
       )
     )
   }
@@ -857,8 +860,8 @@ validate_structure <- function(dataset, str_checks = "all") { # MARK: validate_s
     col_distance <- duplicated(t(dataset)) | duplicated(t(dataset), fromLast = T)
 
     results[["duplicated_column"]] <- list(
-      "n_dupli_column" = sum(col_distance, na.rm = T),
-      "which_dupli_column" = rownames(which(col_distance == T,
+      "n_dupli_column" = sum(col_distance, na.rm = TRUE),
+      "which_dupli_column" = rownames(which(col_distance == TRUE,
         arr.ind = T
       ))
     )
