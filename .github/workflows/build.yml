@@ -1,8 +1,9 @@
 name: Build container
 
 on:
-  tags:
-    - "v*"
+  push:
+    tags:
+      - "v*"
   workflow_dispatch:
 
 jobs:
